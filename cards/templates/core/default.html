@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Card Creator</title>
+    <!-- General style -->
+    <style>
+        BODY {
+            background: #223;
+        }
+        .card {
+            position:relative;
+            border-radius:0.1in;
+            border: 1px solid #CCC;
+            background: #DDD;
+            color: #222;
+            text-shadow:#FFF 0px 0px 4px;
+        }
+        .card .field {
+            position:absolute;
+            padding: 0.2in;
+        }
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

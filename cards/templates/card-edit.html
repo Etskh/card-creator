@@ -1,0 +1,24 @@
+{% extends 'core/default.html' %}
+
+{% block content %}
+<!-- CardList View -->
+<style>
+    .cardtype-{{ cardtype.name }} .card {
+        width: {{ cardtype.width }}in;
+        height: {{ cardtype.height }}in;
+        position:relative;
+    }
+    .field {
+        position:absolute;
+    }
+</style>
+<div class="card-list cardtype-{{ cardtype.name }}">
+    <div class="card">
+    {% for field in cardtype.field_set.all %}
+        <span class="field field-{{ field.name }}"
+              style="top:{{ field.height}}%;width:{{ field.width }}%;{{ field.style }}"
+              id="field-{{ field.pk }}">{{ field.name }}</span>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

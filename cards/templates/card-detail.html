@@ -1,0 +1,8 @@
+<!-- Card View -->
+<div class="card" id="card-{{ card.pk }}" data-name="{{ card.title }}">
+    {% for data in card.fields.all %}
+        <span class="field field-{{ data.field.name }}">{{ data.value }}</span>
+    {% empty %}
+        no fields
+    {% endfor %}
+</div>

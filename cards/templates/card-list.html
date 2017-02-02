@@ -1,0 +1,24 @@
+{% extends 'core/default.html' %}
+
+{% block content %}
+<!-- CardList View -->
+<style>
+    .cardtype-{{ cardtype.name }} .card {
+      width: {{ cardtype.width }}in;
+      height: {{ cardtype.height }}in;
+    }
+
+    {% for field in cardtype.fields %}
+    .cardtype-{{ cardtype.name }} .card .field-{{ field.name }} {
+      top: {{ field.height }}%;
+      width: {{ field.width }}%;
+      {{ field.style }};
+    }
+    {% endfor %}
+</style>
+<div class="card-list cardtype-{{ cardtype.name }}">
+    {% for card in cards %}
+        {% include 'card-detail.html' %}
+    {% endfor %}
+</div>
+{% endblock %}

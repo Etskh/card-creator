@@ -7,12 +7,9 @@
       width: {{ cardtype.width }}in;
       height: {{ cardtype.height }}in;
     }
-
     {% for field in cardtype.fields %}
     .cardtype-{{ cardtype.name }} .card .field-{{ field.name }} {
-      top: {{ field.height }}%;
-      width: {{ field.width }}%;
-      {{ field.style }};
+      {{ field.css }}
     }
     {% endfor %}
 </style>

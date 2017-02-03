@@ -10,6 +10,7 @@ def home(request):
         'cards': cardtype.card_set.all(),
     })
 
+
 def edit(request):
     cardtype = get_object_or_404(CardType, name='Item')
     return render(request, 'card-edit.html', {

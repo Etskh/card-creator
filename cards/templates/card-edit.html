@@ -8,17 +8,29 @@
         height: {{ cardtype.height }}in;
         position:relative;
     }
+    .inner-card {
+        position:relative;
+        margin: {{ cardtype.margin }}in;
+        width: {{ cardtype.inner_width }}in;
+        height: {{ cardtype.inner_height }}in;
+    }
     .field {
         position:absolute;
+        cursor: pointer;
+    }
+    .field:hover {
+        background: #FFF;
     }
 </style>
 <div class="card-list cardtype-{{ cardtype.name }}">
     <div class="card">
-    {% for field in cardtype.field_set.all %}
-        <span class="field field-{{ field.name }}"
-              style="top:{{ field.height}}%;width:{{ field.width }}%;{{ field.style }}"
-              id="field-{{ field.pk }}">{{ field.name }}</span>
-    {% endfor %}
+        <div class="inner-card">
+        {% for field in cardtype.field_set.all %}
+            <span class="field field-{{ field.name }} editable-field"
+                  style="{{ field.css }}"
+                  id="field-{{ field.pk }}">{{ field.name }}</span>
+        {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

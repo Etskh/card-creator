@@ -1,0 +1,35 @@
+
+
+BODY {
+    background: #223;
+}
+.controls {
+    display: inline-block;
+    padding: 0.5in;
+    vertical-align: top;
+    background: rgba(255,255,255,0.2);
+}
+.card-list {
+    margin: 0.3in;
+    display: inline-block;
+    vertical-align: top;
+}
+.card {
+    position:relative;
+    border-radius:0.08in;
+    border: 1px solid #CCC;
+    background: #DDD;
+    color: #222;
+    text-shadow:#FFF 0px 0px 4px;
+}
+.inner-card {
+    position:relative;
+    background: #EEE;
+}
+.card .field {
+    position:absolute;
+    cursor: pointer;
+}
+.field:hover {
+    background: #FFF;
+}

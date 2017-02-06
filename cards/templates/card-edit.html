@@ -3,12 +3,6 @@
 {% block content %}
 <!-- CardList View -->
 <style>
-    .controls {
-        display: inline-block;
-        padding: 0.5in;
-        vertical-align: top;
-    }
-
     .cardtype-{{ cardtype.name }} .card {
         width: {{ cardtype.width }}in;
         height: {{ cardtype.height }}in;
@@ -19,13 +13,6 @@
         margin: {{ cardtype.margin }}in;
         width: {{ cardtype.inner_width }}in;
         height: {{ cardtype.inner_height }}in;
-    }
-    .field {
-        position:absolute;
-        cursor: pointer;
-    }
-    .field:hover {
-        background: #FFF;
     }
 </style>
 <div class="card-list cardtype-{{ cardtype.name }}">

@@ -3,11 +3,22 @@
 {% block content %}
 <!-- CardList View -->
 <style>
+    .controls {
+        display: inline-block;
+        padding: 0.5in;
+        vertical-align: top;
+    }
     .cardtype-{{ cardtype.name }} .card {
       width: {{ cardtype.width }}in;
       height: {{ cardtype.height }}in;
     }
-    {% for field in cardtype.fields %}
+    .inner-card {
+        position:relative;
+        margin: {{ cardtype.margin }}in;
+        width: {{ cardtype.inner_width }}in;
+        height: {{ cardtype.inner_height }}in;
+    }
+    {% for field in cardtype.field_set.all %}
     .cardtype-{{ cardtype.name }} .card .field-{{ field.name }} {
       {{ field.css }}
     }
@@ -15,7 +26,19 @@
 </style>
 <div class="card-list cardtype-{{ cardtype.name }}">
     {% for card in cards %}
-        {% include 'card-detail.html' %}
+        <!-- Card View -->
+        <div class="card" id="card-{{ card.pk }}" data-name="{{ card.title }}">
+            <div class="inner-card">
+            {% for data in card.fields.all %}
+                <span class="field field-{{ data.field.name }}">{{ data.value }}</span>
+            {% empty %}
+                no fields
+            {% endfor %}
+            </div>
+        </div>
     {% endfor %}
+</div>
+<div class="controls">
+    <button class="btn btn-primary" id="start-editing">Edit</button>
 </div>
 {% endblock %}

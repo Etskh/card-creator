@@ -44,10 +44,12 @@ class Field(models.Model):
         return '''
             width: {}%;
             top: {}%;
+            text-align: {};
             {};
         '''.format(
             self.width * 100,
-            self.height,
+            self.height * 100,
+            self.alignment,
             self.style
         )
 

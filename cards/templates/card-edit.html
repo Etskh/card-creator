@@ -19,7 +19,7 @@
     <div class="card">
         <div class="inner-card">
         {% for field in cardtype.field_set.all %}
-            <span class="field field-{{ field.name }} editable-field"
+            <span class="field field-{{ field.name }} selectable-field"
                   style="{{ field.css }}"
                   id="field-{{ field.pk }}">{{ field.name }}</span>
         {% endfor %}
@@ -27,6 +27,12 @@
     </div>
 </div>
 <div class="controls">
+    <!--
+        <button class="btn btn-success" id="add-field">+ Add field</button>
+    -->
+    <div id="field-edit">
+        <p>Select a field to begin editing</p>
+    </div>
     <button class="btn btn-primary" id="done-editing">Done</button>
 </div>
 {% endblock %}

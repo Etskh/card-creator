@@ -1,10 +1,11 @@
 from django.db import models
 from django.contrib.auth.admin import User
 
+
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    create_date = models.DateTimeField('date created')
-    owner = models.ForeignKey(User, null=True, related_name='projects', on_delete=models.CASCADE)
+    create_date = models.DateTimeField('date created', auto_now_add=True, blank=True)
+    owner = models.ForeignKey(User, null=True, blank=True, related_name='projects', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -17,10 +18,13 @@ class CardType(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     REASONABLE_MARGIN = 0.12
+
     def margin(self):
         return CardType.REASONABLE_MARGIN
+
     def inner_width(self):
         return float(self.width) - (CardType.REASONABLE_MARGIN * 2.2)
+
     def inner_height(self):
         return float(self.height) - (CardType.REASONABLE_MARGIN * 2.2)
 
@@ -37,16 +41,11 @@ class Field(models.Model):
         ('center', 'Centre'),
         ('right', 'Right'),
     ), max_length=16)
-    style = models.CharField(max_length=255,blank=True)
+    style = models.CharField(max_length=255, default='', blank=True)
     card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
 
     def css(self):
-        return '''
-            width: {}%;
-            top: {}%;
-            text-align: {};
-            {};
-        '''.format(
+        return 'width:{}%; top:{}%; text-align:{}; {};'.format(
             self.width * 100,
             self.height * 100,
             self.alignment,

@@ -33,3 +33,13 @@ BODY {
 .field:hover {
     background: #FFF;
 }
+
+.field.active {
+    border: solid 4px rgba(0, 255, 0, 0.3);
+}
+
+
+#field-edit input {
+    padding: 8px;
+}
+

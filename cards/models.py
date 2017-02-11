@@ -3,6 +3,10 @@ from django.contrib.auth.admin import User
 
 
 class Project(models.Model):
+    """
+    This represents a collection of card types
+    - a single board game or a prototype
+    """
     name = models.CharField(max_length=255)
     create_date = models.DateTimeField('date created', auto_now_add=True, blank=True)
     owner = models.ForeignKey(User, null=True, blank=True, related_name='projects', on_delete=models.CASCADE)
@@ -12,6 +16,12 @@ class Project(models.Model):
 
 
 class CardType(models.Model):
+    """
+    A single instance of a type of card
+    - it has several fields and a size
+    - eventually there will be a 'factory' of some sort
+    - ^ it will create prototypal card types (playing card, magic card)
+    """
     name = models.CharField(max_length=255)
     width = models.DecimalField(default=2.5, max_digits=3, decimal_places=2)
     height = models.DecimalField(default=4.0, max_digits=3, decimal_places=2)
@@ -33,6 +43,9 @@ class CardType(models.Model):
 
 
 class Field(models.Model):
+    """
+    A single row on a card
+    """
     name = models.CharField(max_length=255)
     width = models.DecimalField("Width, percentage", default=1.0, max_digits=5, decimal_places=4)
     height = models.DecimalField("Distance from top, percentage", default=0.0, max_digits=5, decimal_places=4)
@@ -57,16 +70,22 @@ class Field(models.Model):
 
 
 class Card(models.Model):
+    """
+    This is an individual card with a name and the number to put
+    in a single collection
+    """
     title = models.CharField(null=True, max_length=255)
     count = models.IntegerField(default=4)
     card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
 
     def __str__(self):
-        print(self.fields.all())
         return self.title
 
 
 class FieldData(models.Model):
+    """
+    A single field of data
+    """
     value = models.CharField(max_length=255)
     field = models.ForeignKey(Field, related_name='+', on_delete=models.CASCADE)
     card = models.ForeignKey(Card, related_name='fields', on_delete=models.CASCADE)

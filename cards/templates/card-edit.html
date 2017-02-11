@@ -20,7 +20,7 @@
         <div class="inner-card">
         {% for field in cardtype.field_set.all %}
             <span class="field field-{{ field.name }} selectable-field"
-                  style="{{ field.css }}"
+                  style="{{ field.css }}" data-id="{{ field.pk }}"
                   id="field-{{ field.pk }}">{{ field.name }}</span>
         {% endfor %}
         </div>

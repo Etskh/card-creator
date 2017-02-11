@@ -1,4 +1,10 @@
 
+var Field = {
+    change: function(e) {
+        console.log('changed field');
+    }
+}
+
 
 $(document).ready( function() {
 
@@ -13,8 +19,15 @@ $(document).ready( function() {
     });
 
     $('.selectable-field').click(function() {
+
+        // TODO: Deselect all other fields
+        // TODO: Add the border-green
+        $(this).addClass('active');
+
         // select the field!
-        $('#field-edit').html('This is the new field');
+        $.get('/field/' + this.dataset.id, function(body) {
+            $('#field-edit').html(body);
+        });
     });
 });
 

@@ -1,0 +1,15 @@
+<div>
+    <div class="row">
+        <input type="text" value="{{ field.name }}" data-id="{{ field.pk }}" class=""/>
+    </div>
+    <div class="row">
+        <input type="text" placeholder="Additional style" value="{{ field.style }}" data-id="{{ field.pk }}" class=""/>
+    </div>
+    <div class="row">
+        <div class="btn-group" data-toggle="buttons">
+            {% include 'partials/field-alignment.html' with alignment='left' %}
+            {% include 'partials/field-alignment.html' with alignment='center' %}
+            {% include 'partials/field-alignment.html' with alignment='right' %}
+        </div>
+    </div>
+</div>

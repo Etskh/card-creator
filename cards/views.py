@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from .models import CardType
+from .models import CardType, Field
 
 
 def home(request):
@@ -17,3 +17,9 @@ def edit(request):
         'cardtype': cardtype
     })
 
+
+def field_edit(request, field_id):
+    field = get_object_or_404(Field, pk=field_id)
+    return render(request, 'partials/field-edit.html', {
+        'field': field
+    })

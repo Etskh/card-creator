@@ -1,5 +1,7 @@
-<label class="btn btn-default {% ifequal field.alignment alignment %}active{% endifequal %}">
-    <input type="radio" name="alignment" id="{{ alignment }}" autocomplete="off"
-        {% ifequal field.alignment alignment %}checked{% endifequal %}>
+<label class="btn btn-default
+    {% ifequal field.alignment alignment %}active{% endifequal %}">
+    <input type="radio" name="alignment" class="field-alignment"
+           id="{{ alignment }}" value="{{ alignment }}" autocomplete="off"
+        {% ifequal field.alignment alignment %}checked{% endifequal %}/>
     <span class="glyphicon glyphicon-align-{{ alignment }}" aria-hidden="true"></span>
 </label>

@@ -8,8 +8,7 @@
 - ✓ fields can be selected
 - ✓ fields can be dragged to move around
 - ✓ can modify name
-- can modify width
-- can modify alignment
+- ✓ can modify alignment
 - add fields to the card type
 - remove fields from the card type
 

@@ -32,7 +32,16 @@ BODY {
     border: solid 4px transparent;
 }
 .field:hover {
-    background: #FFF;
+    background: rgba(255,255,255,0.2);
+}
+
+.controls p {
+    color: #EEE;
+    text-shadow: #000 0px 0px 3px;
+}
+.controls .row {
+    margin: 4px;
+    text-align: center;
 }
 
 .field.active {

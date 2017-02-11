@@ -17,7 +17,6 @@ $(document).ready( function() {
             $.get('/field/' + id, function(body) {
                 $('#field-edit').html(body);
                 $('.field-name').keyup( function() {
-                    console.log(arguments);
                     var value = $('.field-name').val();
                     Field.save(id, {
                         name: value,
@@ -25,6 +24,15 @@ $(document).ready( function() {
                         $('.selectable-field.active').text(value);
                     });
                 });
+                $('.field-alignment').change(function(e){
+                    Field.save(id, {
+                        alignment: e.target.value,
+                    }, function() {
+                        $('.selectable-field.active').css({
+                            'textAlign': e.target.value,
+                        });
+                    });
+                })
             });
         }
     };

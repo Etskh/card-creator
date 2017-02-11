@@ -29,13 +29,14 @@ BODY {
 .card .field {
     position:absolute;
     cursor: pointer;
+    border: solid 4px transparent;
 }
 .field:hover {
     background: #FFF;
 }
 
 .field.active {
-    border: solid 4px rgba(0, 255, 0, 0.3);
+    border: solid 4px rgba(0, 200, 0, 0.4);
 }
 
 

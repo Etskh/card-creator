@@ -6,17 +6,18 @@
 ### Basic Type Editing
 - ✓ can edit a card type
 - ✓ fields can be selected
-- fields can be dragged to move around
+- ✓ fields can be dragged to move around
+- ✓ can modify name
 - can modify width
 - can modify alignment
 - add fields to the card type
 - remove fields from the card type
 
 
-## MILESTONE 1
+## MILESTONE 2
 ### Basic Card Editing
 - a bar up top to show all the card types
-  [             -dk. grey-                      ]
+  `[             -dk. grey-                      ]`
 - in the bar, list all card types as buttons
   [ {#card types}                               ]
 - these buttons will show the cardtype below as a list of card data

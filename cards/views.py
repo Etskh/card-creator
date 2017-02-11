@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 
 from .models import CardType, Field
 
@@ -20,6 +21,24 @@ def edit(request):
 
 def field_edit(request, field_id):
     field = get_object_or_404(Field, pk=field_id)
-    return render(request, 'partials/field-edit.html', {
-        'field': field
-    })
+
+    if request.method == 'GET':
+        return render(request, 'partials/field-edit.html', {
+            'field': field
+        })
+
+    elif request.method == 'POST':
+        if 'top' in request.POST:
+            field.height = request.POST['top']
+
+        if 'name' in request.POST:
+            field.name = request.POST['name']
+
+        if 'alignment' in request.POST:
+            field.alignment = request.POST['alignment']
+
+        field.save()
+
+        return JsonResponse({
+            'success': True
+        })

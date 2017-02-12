@@ -3,12 +3,38 @@
 BODY {
     background: #223;
 }
+
+
+#card-types-nav {
+    background: #666;
+    color: #FFF;
+    text-shadow: #000 0px 0px 4px;
+}
+
+#card-nav {
+    background: #68935e;
+}
+
+
+
 .controls {
     display: inline-block;
     padding: 0.5in;
     vertical-align: top;
     background: rgba(255,255,255,0.2);
 }
+.controls p {
+    color: #EEE;
+    text-shadow: #000 0px 0px 3px;
+}
+.controls .row {
+    margin: 4px;
+    text-align: center;
+}
+
+
+
+
 .card-list {
     margin: 0.3in;
     display: inline-block;
@@ -22,26 +48,19 @@ BODY {
     color: #222;
     text-shadow:#FFF 0px 0px 4px;
 }
-.inner-card {
-    position:relative;
-    background: #EEE;
-}
 .card .field {
     position:absolute;
     cursor: pointer;
     border: solid 4px transparent;
 }
-.field:hover {
-    background: rgba(255,255,255,0.2);
+
+.inner-card {
+    position:relative;
+    background: #EEE;
 }
 
-.controls p {
-    color: #EEE;
-    text-shadow: #000 0px 0px 3px;
-}
-.controls .row {
-    margin: 4px;
-    text-align: center;
+.field:hover {
+    background: rgba(255,255,255,0.2);
 }
 
 .field.active {

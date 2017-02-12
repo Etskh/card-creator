@@ -10,7 +10,7 @@
 - ✓ can modify name
 - ✓ can modify alignment
 - ✓ add fields to the card type
-- remove fields from the card type
+- ✓ remove fields from the card type
 
 
 ## MILESTONE 2
@@ -30,7 +30,7 @@
 - each card has a number beside it denoting how many in the deck (4x)
 
 
-## MILESTONE 1
+## MILESTONE 3
 ### Automatic Deployment
 - add secret_key env to heroku account
 - add secret_key env to pycharm environment
@@ -40,7 +40,7 @@
   body { font-family: 'Oswald', sans-serif; }
 
 
-## MILESTONE 1
+## MILESTONE 4
 ### Advanced Card Editing:
 - remove style from model
 - add italic boolean to field
@@ -55,7 +55,7 @@
 - change background of cardtype
 
 
-## MILESTONE 1
+## MILESTONE 5
 ### Project
 - `[                  -black-                    ]`
   bar at top of screen to show current project

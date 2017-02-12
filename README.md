@@ -9,8 +9,8 @@
 - ✓ fields can be dragged to move around
 - ✓ can modify name
 - ✓ can modify alignment
-- add fields to the card type
-- remove fields from the card type
+- ✓ add fields to the card type
+- ✓ remove fields from the card type
 
 
 ## MILESTONE 2
@@ -18,19 +18,19 @@
 - a bar up top to show all the card types
   `[             -dk. grey-                      ]`
 - in the bar, list all card types as buttons
-  [ {#card types}                               ]
+  `[ {#card types}                               ]`
 - these buttons will show the cardtype below as a list of card data
-  [ {#card types}                               ]
+  `[ {#card types}                               ]`
 - second bar will switch between the different card-type views
-  [ view | layout     -light green-             ]
+  `[ view | layout     -light green-             ]`
 - a table of existing cards
-  [ view | layout | data   -light green-        ]
+  `[ view | layout | data   -light green-        ]`
 - create a new card creates a new row in the table
 - changing fields in the text edit view popup
 - each card has a number beside it denoting how many in the deck (4x)
 
 
-## MILESTONE 1
+## MILESTONE 3
 ### Automatic Deployment
 - add secret_key env to heroku account
 - add secret_key env to pycharm environment
@@ -40,7 +40,7 @@
   body { font-family: 'Oswald', sans-serif; }
 
 
-## MILESTONE 1
+## MILESTONE 4
 ### Advanced Card Editing:
 - remove style from model
 - add italic boolean to field
@@ -55,7 +55,7 @@
 - change background of cardtype
 
 
-## MILESTONE 1
+## MILESTONE 5
 ### Project
 - `[                  -black-                    ]`
   bar at top of screen to show current project

@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^$', cardviews.home),
     url(r'^edit/', cardviews.edit),
     url(r'^field/(?P<field_id>[0-9]+)$', cardviews.field_edit),
+    url(r'^field$', cardviews.field_edit),
 ]

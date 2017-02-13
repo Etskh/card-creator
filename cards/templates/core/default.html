@@ -4,24 +4,35 @@
     <meta charset="UTF-8">
     <title>Card Creator</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylcard-types-navesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="/static/cards/cards.css"/>
 </head>
 <body>
-    <div id="">
-        <ul>
-            <li>
-                <a href=""></a>
-            </li>
+    <!--
+    <div id="card-types-nav">
+        <ul class="nav">
+            <li><a href="#">Item</a></li>
         </ul>
     </div>
     <div id="card-nav">
-        <ul>
-            <li>
-                <a href="view"></a>
-            </li>
+        <ul class="nav">
+            <li><a href="#">View</a></li>
+            <li><a href="#">Layout</a></li>
+            <li><a href="#">Data</a></li>
         </ul>
     </div>
+    -->
+    <nav class="navbar navbar-default cardtypes-nav">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <ul class="nav navbar-nav">
+            {% for type in card_types %}
+                <li class="active"><a href="#">{{ type.name }}<span class="sr-only">(current)</span></a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div id="content">
         {% block content %}{% endblock %}
     </div>

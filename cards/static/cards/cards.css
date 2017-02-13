@@ -5,16 +5,18 @@ BODY {
 }
 
 
-#card-types-nav {
-    background: #666;
-    color: #FFF;
+
+nav.cardtypes-nav {
+    background: #444;
+    border: none;
+}
+nav.cardtypes-nav .navbar-nav>.active>a,
+nav.cardtypes-nav .navbar-nav>.active>a:hover,
+nav.cardtypes-nav .navbar-nav>.active>a:focus {
+    background: #333;
     text-shadow: #000 0px 0px 4px;
+    color: #FFF;
 }
-
-#card-nav {
-    background: #68935e;
-}
-
 
 
 .controls {

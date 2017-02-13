@@ -5,16 +5,20 @@ from .models import CardType, Field
 
 
 def home(request):
-    cardtype = get_object_or_404(CardType, name='Item')
+    card_type = get_object_or_404(CardType, name='Item')
+    card_types = CardType.objects.all()
     return render(request, 'card-list.html', {
-        'cardtype': cardtype,
-        'cards': cardtype.card_set.all(),
+        'card_types': card_types,
+        'cardtype': card_type,
+        'cards': card_type.card_set.all(),
     })
 
 
 def edit(request):
     cardtype = get_object_or_404(CardType, name='Item')
+    card_types = CardType.objects.all()
     return render(request, 'card-edit.html', {
+        'card_types': card_types,
         'cardtype': cardtype
     })
 

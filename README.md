@@ -15,11 +15,11 @@
 
 ## MILESTONE 2
 ### Basic Card Editing
-- a bar up top to show all the card types
+- ✓ a bar up top to show all the card types
   `[             -dk. grey-                      ]`
-- in the bar, list all card types as buttons
+- ✓ in the bar, list all card types as buttons
   `[ {#card types}                               ]`
-- these buttons will show the cardtype below as a list of card data
+- ✓ these buttons will show the cardtype below as a list of card data
   `[ {#card types}                               ]`
 - second bar will switch between the different card-type views
   `[ view | layout     -light green-             ]`

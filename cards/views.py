@@ -5,21 +5,45 @@ from .models import CardType, Field
 
 
 def home(request):
-    card_type = get_object_or_404(CardType, name='Item')
+    card_types = CardType.objects.all()
+    return render(request, 'core/default.html', {
+        'view_name': 'home',
+        'card_types': card_types,
+    })
+
+
+def view(request, type_id):
+    card_type = get_object_or_404(CardType, pk=type_id)
     card_types = CardType.objects.all()
     return render(request, 'card-list.html', {
+        'view_name': 'view',
         'card_types': card_types,
         'cardtype': card_type,
         'cards': card_type.card_set.all(),
     })
 
 
-def edit(request):
-    cardtype = get_object_or_404(CardType, name='Item')
+def layout(request, type_id):
+    card_type = get_object_or_404(CardType, pk=type_id)
     card_types = CardType.objects.all()
-    return render(request, 'card-edit.html', {
+    return render(request, 'card-layout.html', {
+        'view_name': 'layout',
         'card_types': card_types,
-        'cardtype': cardtype
+        'cardtype': card_type
+    })
+
+
+def data(request, type_id):
+    card_type = get_object_or_404(CardType, pk=type_id)
+    card_types = CardType.objects.all()
+    cards = card_type.card_set.all()
+    total_card_count = sum([card.count for card in cards])
+    return render(request, 'card-data.html', {
+        'view_name': 'data',
+        'card_types': card_types,
+        'cardtype': card_type,
+        'total_card_count': total_card_count,
+        'cards': card_type.card_set.all(),
     })
 
 

@@ -31,9 +31,8 @@
             {% endfor %}
             </div>
         </div>
+    {% empty %}
+        <h1>You have no cards in this set</h1>
     {% endfor %}
-</div>
-<div class="controls">
-    <button class="btn btn-primary" id="start-editing">Edit</button>
 </div>
 {% endblock %}

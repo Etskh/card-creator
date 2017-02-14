@@ -20,7 +20,9 @@ from cards import views as cardviews
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', cardviews.home),
-    url(r'^edit/', cardviews.edit),
+    url(r'^type/(?P<type_id>[0-9]+)$', cardviews.view),
+    url(r'^type/(?P<type_id>[0-9]+)/layout$', cardviews.layout),
+    url(r'^type/(?P<type_id>[0-9]+)/data$', cardviews.data),
     url(r'^field/(?P<field_id>[0-9]+)$', cardviews.field_edit),
     url(r'^field$', cardviews.field_edit),
 ]

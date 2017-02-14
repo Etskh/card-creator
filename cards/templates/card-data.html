@@ -1,0 +1,19 @@
+{% extends 'core/default.html' %}
+
+{% block content %}
+<h3>Showing {{ cards|length }} card instances, totalling {{ total_card_count }} cards</h3>
+<div class="card-list cardtype-{{ cardtype.name }}">
+    <table class="table">
+        <tr>
+            <td>Title</td>
+            <td>Count</td>
+        </tr>
+    {% for card in cards %}
+    <tr id="card-{{ card.pk }}" data-name="{{ card.title }}">
+        <td>{{ card.title }}</td>
+        <td>{{ card.count }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

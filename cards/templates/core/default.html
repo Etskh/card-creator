@@ -5,34 +5,35 @@
     <title>Card Creator</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/static/cards/cards.css"/>
 </head>
 <body>
-    <!--
-    <div id="card-types-nav">
-        <ul class="nav">
-            <li><a href="#">Item</a></li>
-        </ul>
-    </div>
-    <div id="card-nav">
-        <ul class="nav">
-            <li><a href="#">View</a></li>
-            <li><a href="#">Layout</a></li>
-            <li><a href="#">Data</a></li>
-        </ul>
-    </div>
-    -->
     <nav class="navbar navbar-default cardtypes-nav">
       <div class="container-fluid">
         <div class="navbar-header">
           <ul class="nav navbar-nav">
             {% for type in card_types %}
-                <li class="active"><a href="#">{{ type.name }}<span class="sr-only">(current)</span></a></li>
+                <li class="{% if type.name == cardtype.name %}active{% endif %}"><a href="/type/{{ type.id }}">{{ type.name }}</a></li>
             {% endfor %}
           </ul>
         </div>
       </div>
     </nav>
+    {% if cardtype %}
+    <nav class="navbar navbar-default card-nav">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <ul class="nav navbar-nav">
+            <li class="{% if view_name == "view" %}active{% endif %}"><a href="/type/{{ cardtype.id }}">view</a></li>
+            <li class="{% if view_name == "layout" %}active{% endif %}"><a href="/type/{{ cardtype.id }}/layout">layout</a></li>
+            <li class="{% if view_name == "data" %}active{% endif %}"><a href="/type/{{ cardtype.id }}/data">data</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endif %}
     <div id="content">
         {% block content %}{% endblock %}
     </div>

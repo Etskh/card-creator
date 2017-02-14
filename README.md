@@ -21,13 +21,22 @@
   `[ {#card types}                               ]`
 - ✓ these buttons will show the cardtype below as a list of card data
   `[ {#card types}                               ]`
-- second bar will switch between the different card-type views
+- ✓ second bar will switch between the different card-type views
   `[ view | layout     -light green-             ]`
-- a table of existing cards
+- ✓ a table of existing cards
   `[ view | layout | data   -light green-        ]`
 - create a new card creates a new row in the table
 - changing fields in the text edit view popup
-- each card has a number beside it denoting how many in the deck (4x)
+- ✓ each card has a number beside it denoting how many in the deck (4x)
+
+
+## MILESTONE 6
+### Field Templates
+- you can create a template for a field at the cardtype level
+- this will provide a value for the field data doesn't exist for that card
+- by default, the field data will be grayed out in the view
+- you can use [field-name] in the fields to print out other fields
+- it makes sure that you don't have any circular dependencies
 
 
 ## MILESTONE 3
@@ -35,7 +44,7 @@
 - add secret_key env to heroku account
 - add secret_key env to pycharm environment
 - add travis build key to heroku account
-- spruce up the page
+- ✓ spruce up the page
   <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
   body { font-family: 'Oswald', sans-serif; }
 
@@ -72,15 +81,6 @@
   `{list} show a list of all projects that user owns
 - if user has no projects, {list} doesn't show up
 - project list page has names of all projects to go to their page
-
-
-## MILESTONE 6
-### Field Templates
-- you can create a template for a field at the cardtype level
-- this will provide a value for the field data doesn't exist for that card
-- by default, the field data will be grayed out in the view
-- you can use [field-name] in the fields to print out other fields
-- it makes sure that you don't have any circular dependencies
 
 
 ## MILESTONE 7

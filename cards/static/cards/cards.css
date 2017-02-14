@@ -2,10 +2,22 @@
 
 BODY {
     background: #223;
+    color: #EEE;
+    font-weight: 300;
+    font-family: 'Oswald', sans-serif;
 }
 
+TABLE {
+    color: #FFF;
+    background: #222;
+}
+TD {
+    color: #FFF;
+}
 
-
+nav.navbar-default {
+    margin:0px;
+}
 nav.cardtypes-nav {
     background: #444;
     border: none;
@@ -14,6 +26,17 @@ nav.cardtypes-nav .navbar-nav>.active>a,
 nav.cardtypes-nav .navbar-nav>.active>a:hover,
 nav.cardtypes-nav .navbar-nav>.active>a:focus {
     background: #333;
+    text-shadow: #000 0px 0px 4px;
+    color: #FFF;
+}
+nav.card-nav {
+    background: rgb(138, 216, 142);
+    border: none;
+}
+nav.card-nav .navbar-nav>.active>a,
+nav.card-nav .navbar-nav>.active>a:hover,
+nav.card-nav .navbar-nav>.active>a:focus {
+    background: rgb(94, 147, 97);
     text-shadow: #000 0px 0px 4px;
     color: #FFF;
 }
@@ -72,5 +95,6 @@ nav.cardtypes-nav .navbar-nav>.active>a:focus {
 
 #field-edit input {
     padding: 8px;
+    color: #000;
 }
 

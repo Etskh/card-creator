@@ -47,6 +47,7 @@ class Field(models.Model):
     A single row on a card
     """
     name = models.CharField(max_length=255)
+    template = models.CharField(max_length=255, blank=True, default='')
     width = models.DecimalField("Width, percentage", default=1.0, max_digits=5, decimal_places=4)
     height = models.DecimalField("Distance from top, percentage", default=0.0, max_digits=5, decimal_places=4)
     alignment = models.CharField(default='left', choices=(
@@ -80,6 +81,17 @@ class Card(models.Model):
 
     def __str__(self):
         return self.title
+
+    def all_fields(self):
+        type_fields = self.card_type.field_set.all()
+
+        for field in type_fields:
+            if not self.fields.get(field=field):
+                print('don\'t have field {}'.format(field.name))
+            else:
+                print('Has data for field {}'.format(field.name))
+
+        return ''
 
 
 class FieldData(models.Model):

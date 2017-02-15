@@ -1,6 +1,9 @@
 <div>
     <div class="row">
-        <input type="text" value="{{ field.name }}" data-id="{{ field.pk }}" class="field-name"/>
+        <div class="input-group">
+            <span class="input-group-addon" id="field-name-label">Name</span>
+            <input type="text" class="form-control" placeholder="Name" aria-describedby="field-name-label" value="{{ field.name }}" data-id="{{ field.pk }}" class="field-name"/>
+        </div>
     </div>
     <div class="row">
         <p>Drag the field around to move it vertically</p>

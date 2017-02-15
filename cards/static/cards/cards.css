@@ -47,6 +47,7 @@ nav.card-nav .navbar-nav>.active>a:focus {
     padding: 0.5in;
     vertical-align: top;
     background: rgba(255,255,255,0.2);
+    width: 340px;
 }
 .controls p {
     color: #EEE;

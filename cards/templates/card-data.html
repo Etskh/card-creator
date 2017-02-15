@@ -9,6 +9,7 @@
             <td>Count</td>
         </tr>
     {% for card in cards %}
+        {{ card.all_fields }}
     <tr id="card-{{ card.pk }}" data-name="{{ card.title }}">
         <td>{{ card.title }}</td>
         <td>{{ card.count }}</td>

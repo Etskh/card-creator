@@ -25,32 +25,27 @@
   `[ view | layout     -light green-             ]`
 - ✓ a table of existing cards
   `[ view | layout | data   -light green-        ]`
-- create a new card creates a new row in the table
-- changing fields in the text edit view popup
 - ✓ each card has a number beside it denoting how many in the deck (4x)
 
 
-## MILESTONE 6
-### Field Templates
-- you can create a template for a field at the cardtype level
-- this will provide a value for the field data doesn't exist for that card
-- by default, the field data will be grayed out in the view
-- you can use [field-name] in the fields to print out other fields
-- it makes sure that you don't have any circular dependencies
-
-
 ## MILESTONE 3
-### Automatic Deployment
-- add secret_key env to heroku account
-- add secret_key env to pycharm environment
-- add travis build key to heroku account
-- ✓ spruce up the page
-  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-  body { font-family: 'Oswald', sans-serif; }
+### Field Patterns
+- you can create a template for a field at the cardtype level
+  this will provide a value for the field data doesn't exist for that card
+- by default, the field data will be grayed out in the view
+- you can use `{title}` in the fields to print out the title
+- each card has a collection of rules
+- rules are text with a decimal weight of benefit or detriment
+- rules can be put into a field with the `{rules}` string
+- create integer values for each card, like fields
+- these numbers cannot be null
+- fields can reference data in the cards with `{#data-name}`
 
 
 ## MILESTONE 4
 ### Advanced Card Editing:
+- create a new card creates a new row in the table
+- changing fields in the text edit view popup
 - remove style from model
 - add italic boolean to field
 - add bold boolean to field
@@ -65,6 +60,16 @@
 
 
 ## MILESTONE 5
+### Automatic Deployment
+- add secret_key env to heroku account
+- add secret_key env to pycharm environment
+- add travis build key to heroku account
+- ✓ spruce up the page
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+  body { font-family: 'Oswald', sans-serif; }
+
+
+## MILESTONE 6
 ### Project
 - `[                  -black-                    ]`
   bar at top of screen to show current project
@@ -83,6 +88,15 @@
 - project list page has names of all projects to go to their page
 
 
+## MILESTONE 8
+### Art on Card
+- allow file uploads as hashed jpgs
+- as an extra piece of data for each card: have unique art
+- this can be uploaded from the card data entry area
+- there are checks for size to make sure it's not too big, or small
+- `{art}` puts the image in the field with pos:abs, w/h:100%
+
+
 ## MILESTONE 7
 ### Users
 - if not logged in, show log-in screen to log-in
@@ -93,29 +107,7 @@
 - user settings has a name field for the user
 
 
-## MILESTONE 8
-### Rules
-- each card has a collection of rules
-- rules are text with a decimal weight of benefit or detriment
-- rules can be put into a field with the `{rules}` string
-
-
 ## MILESTONE 9
-### Art on Card
-- As an extra piece of data for each card: have unique art
-- this can be uploaded from the card data entry area
-- there are checks for size to make sure it's not too big, or small
-- `{art}` puts the image in the field with pos:abs, w/h:100%
-
-
-## MILESTONE 10
-### Data
-- create integer values for each card, like fields
-- these numbers cannot be null
-- fields can reference data in the cards with [#data-name]
-
-
-## MILESTONE 11
 ### Symbols
 - create a symbol group and several icons for use in the fields
 - symbols can be referenced in fields with [@symbol-name]

@@ -126,3 +126,39 @@
 - with the data and rules, we can compute a graph
 - to show all the cards in the project
 - we can go from one cardtype to the graph show the jedi curve
+
+
+
+- cards have a template field that is modifyable
+- there is a callback `onkeyup()` that sets a Timeout which will save the field when it is up. If it's called again, it resets the timer
+
+
+- create a `CardView` class in `view.py`, which takes a card-type
+- you can create a template for a field at the cardtype level this will provide a value for the field data doesn't exist for that card
+- by default, the field data will be grayed out in the view
+- you can use {title} in the fields to print out the title
+- you can use {count} in the fields to print out the count
+- each card has a collection of rules
+- rules are text with a decimal weight of benefit or detriment
+- rules can be put into a field with the {rules} string
+- create integer values for each card, like fields
+- these numbers cannot be null
+- fields can reference data in the cards with {#data-name}
+
+
+## Features
+
+### MVP
+- each card has a set of rules that are { text, weight }
+- each card-type has a set of data that each card must possess
+- each card has a dataset of the data that corresponds with the values and names of the card-type data. Possible implementation: text-field of an array of integers: `[1,2,3,4,5]`
+- the follow fields are accessible with vanilla braces: `{title}`, `{count}`, `{rules}`. Possible implementations: `get_fields()` function on a card- this will return a full array of the Fields, complete with text. Other implementation: having a `CardView` object which has `get_fields()` function and 
+  - `{title}`: the title of the card
+  - `{count}`: the number of this type of card
+  - `{rules}`: a list of the rules of the card
+- card-data can be referenced with braces and a hash proceeding the name. For example: {#attack}, {#defence}, {#cost}
+
+### Eventually
+- project symbols can be printed out with an "at" symbol proceeding the name for example: {@red-mana}, {@blue-mana}...
+- symbols can be repeated with card-data, so if the user wants {@heart} to appear three times on the card to represent the number of #wounds, they can add {@heart|#wounds}
+- each card has unique art, which is placed 

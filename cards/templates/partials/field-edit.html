@@ -1,20 +1,42 @@
 <div>
-    <div class="row">
-        <div class="input-group">
-            <span class="input-group-addon" id="field-name-label">Name</span>
-            <input type="text" class="form-control" placeholder="Name" aria-describedby="field-name-label" value="{{ field.name }}" data-id="{{ field.pk }}" class="field-name"/>
-        </div>
+    <div class="alert alert-danger" style="display:none" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="text">...</span>
     </div>
     <div class="row">
         <p>Drag the field around to move it vertically</p>
     </div>
     <div class="row">
+        <div class="input-group">
+            <span class="input-group-addon" id="field-name-label">Name</span>
+            <input type="text" placeholder="Name" aria-describedby="field-name-label" value="{{ field.name }}" data-id="{{ field.pk }}" class="field-name form-control"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="btn-group" data-to ggle="buttons">
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-italic" aria-hidden="true"></span>
+            </button>
+        </div>
         <div class="btn-group" data-toggle="buttons">
             {% include 'partials/field-alignment.html' with alignment='left' %}
             {% include 'partials/field-alignment.html' with alignment='center' %}
             {% include 'partials/field-alignment.html' with alignment='right' %}
         </div>
     </div>
+    <div class="row">
+        <div class="input-group">
+            <span class="input-group-addon" id="field-template-label">Template</span>
+            <input type="text" placeholder="Template" aria-describedby="field-template-label" value="{{ field.template }}" data-id="{{ field.pk }}" class="field-template form-control"/>
+        </div>
+    </div>
+    <div class="row">
+        <p></p>
+    </div>
+    <hr/>
     <div class="row">
         <button class="btn btn-default" id="field-delete">Delete</button>
     </div>

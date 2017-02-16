@@ -75,6 +75,9 @@ def field_edit(request, field_id=None):
         if 'name' in request.POST:
             field.name = request.POST['name']
 
+        if 'template' in request.POST:
+            field.template = request.POST['template']
+
         if 'alignment' in request.POST:
             field.alignment = request.POST['alignment']
 

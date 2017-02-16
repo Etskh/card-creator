@@ -1,5 +1,37 @@
 
 
+var createInputTimer = function( options ) {
+
+    var timer = null;
+
+    options.$elem.keyup( function() {
+        if( timer ) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function(){
+
+            timer = null;
+
+            var value = options.$elem.val();
+            if( options.regex ) {
+                var $alert = $('.alert');
+                if( !value.match(options.regex) ) {
+                    $alert.find('.text').text(options.errorMessage);
+                    $alert.show('blind');
+                    return;
+                }
+                else {
+                    $alert.hide('blind');
+                }
+            }
+
+            options.success(value);
+            console.log('Saved');
+        }, 1000);
+    });
+}
+
+
 $(document).ready( function() {
 
     var Field = {
@@ -14,14 +46,28 @@ $(document).ready( function() {
             // Show the edit widgets
             $.get('/field/' + id, function(body) {
                 $('#field-edit').html(body);
-                $('.field-name').keyup( function() {
-                    var value = $('.field-name').val();
-                    Field.save(id, {
-                        name: value,
-                    }, function() {
-                        $('.selectable-field.active').text(value);
-                    });
+
+                createInputTimer({
+                    $elem: $('.field-name'),
+                    regex: /^[a-zA-Z\-]+$/,
+                    errorMessage: 'Name can only contain letters, numbers, and dashes',
+                    success: function( value ) {
+                        Field.save(id, {
+                            name: value,
+                        }, function() {
+                            $('.selectable-field.active').text(value);
+                        });
+                    },
                 });
+                createInputTimer({
+                    $elem: $('.field-template'),
+                    success: function( value ) {
+                        Field.save(id, {
+                            template: value,
+                        });
+                    },
+                });
+
                 $('.field-alignment').change(function(e){
                     Field.save(id, {
                         alignment: e.target.value,
@@ -55,7 +101,7 @@ $(document).ready( function() {
                 stop: function(event, ui) {
                     Field.save(ui.helper.data('id'), {
                         top: ui.position.top / ui.helper.parent().height()
-                    })
+                    });
                 },
             });
             Field.edit(this.dataset.id);
@@ -66,7 +112,7 @@ $(document).ready( function() {
                 type: 'DELETE',
                 success: function(response) {
                     window.location.reload();
-                }
+                },
             });
         },
     };

@@ -55,15 +55,13 @@ class Field(models.Model):
         ('center', 'Centre'),
         ('right', 'Right'),
     ), max_length=16)
-    style = models.CharField(max_length=255, default='', blank=True)
     card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
 
     def css(self):
-        return 'width:{}%; top:{}%; text-align:{}; {};'.format(
+        return 'width:{}%; top:{}%; text-align:{};'.format(
             self.width * 100,
             self.height * 100,
-            self.alignment,
-            self.style
+            self.alignment
         )
 
     def __str__(self):

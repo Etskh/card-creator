@@ -86,7 +86,7 @@ nav.card-nav .navbar-nav>.active>a:focus {
 }
 
 .field:hover {
-    background: rgba(255,255,255,0.2);
+    border: solid 4px rgba(255, 200, 0, 0.4);
 }
 
 .field.active {

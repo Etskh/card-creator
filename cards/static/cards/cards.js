@@ -1,7 +1,6 @@
 
 
 var createInputTimer = function( options ) {
-
     var timer = null;
 
     options.$elem.keyup( function() {

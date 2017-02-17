@@ -30,10 +30,11 @@
 
 ## MILESTONE 3
 ### Field Patterns
-- you can create a template for a field at the cardtype level
-  this will provide a value for the field data doesn't exist for that card
-- by default, the field data will be grayed out in the view
-- you can use `{title}` in the fields to print out the title
+- ✓ cards have a template field that is modifyable
+- ✓ there is a callback `onkeyup()` that sets a Timeout which will save the field when it is up. If it's called again, it resets the timer
+- ✓ if a card doesn't have a FieldData, use the template
+- ✓ you can use `{title}` in the fields to print out the title
+- ✓ you can use `{count}` in the fields to print out the count
 - each card has a collection of rules
 - rules are text with a decimal weight of benefit or detriment
 - rules can be put into a field with the `{rules}` string
@@ -44,16 +45,15 @@
 
 ## MILESTONE 4
 ### Advanced Card Editing:
-- create a new card creates a new row in the table
-- changing fields in the text edit view popup
-- remove style from model
+- ✓ remove style from model
 - add italic boolean to field
 - add bold boolean to field
 - add font-family selectbox to field
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700|Open+Sans+Condensed:300" rel="stylesheet">
     font-family: 'Open Sans Condensed', sans-serif;
     font-family: 'Amatic SC', cursive;
 - add text-size boolean to field
+- changing fields in the text edit view popup
+- create a new card creates a new row in the table
 - create side bar for cardtype editing
 - change name of cardtype
 - change background of cardtype
@@ -128,22 +128,6 @@
 - we can go from one cardtype to the graph show the jedi curve
 
 
-
-- cards have a template field that is modifyable
-- there is a callback `onkeyup()` that sets a Timeout which will save the field when it is up. If it's called again, it resets the timer
-
-
-- create a `CardView` class in `view.py`, which takes a card-type
-- you can create a template for a field at the cardtype level this will provide a value for the field data doesn't exist for that card
-- by default, the field data will be grayed out in the view
-- you can use {title} in the fields to print out the title
-- you can use {count} in the fields to print out the count
-- each card has a collection of rules
-- rules are text with a decimal weight of benefit or detriment
-- rules can be put into a field with the {rules} string
-- create integer values for each card, like fields
-- these numbers cannot be null
-- fields can reference data in the cards with {#data-name}
 
 
 ## Features

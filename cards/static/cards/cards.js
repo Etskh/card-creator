@@ -25,6 +25,10 @@ var createInputTimer = function( options ) {
             }
 
             options.success(value);
+            options.$elem.addClass('success');
+            setTimeout(function(){
+                options.$elem.addClass('success');
+            }, 500)
             console.log('Saved');
         }, 1000);
     });
@@ -76,6 +80,32 @@ $(document).ready( function() {
                         });
                     });
                 });
+                $('.field-bold').click(function(e){
+                    var $elem = $(e.currentTarget);
+                    $elem.toggleClass('active');
+                    var isBold = $elem.hasClass('active');
+                    Field.save(id, {
+                        is_bold: isBold,
+                    }, function() {
+                        $('.selectable-field.active').css({
+                            'fontWeight': isBold ? 'bold' : 'normal',
+                        });
+                    });
+                });
+                $('.field-italic').click(function(e){
+                    var $elem = $(e.currentTarget);
+                    $elem.toggleClass('active');
+                    var isItalic = $elem.hasClass('active');
+                    console.log(isItalic);
+                    Field.save(id, {
+                        is_italic: isItalic,
+                    }, function() {
+                        $('.selectable-field.active').css({
+                            'fontStyle': isItalic ? 'italic' : 'normal',
+                        });
+                    });
+                });
+
                 $('#field-delete').click(function() {
                     Field.remove(id);
                 });

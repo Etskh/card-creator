@@ -42,6 +42,19 @@ class CardType(models.Model):
         return self.name
 
 
+class CardTypeData(models.Model):
+    """
+    This is a single value-type associated with a card,
+    such as "water-mana-cost" or "attack"
+    """
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, default='', blank=True)
+    card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
 class Field(models.Model):
     """
     A single row on a card
@@ -50,6 +63,8 @@ class Field(models.Model):
     template = models.CharField(max_length=255, blank=True, default='')
     width = models.DecimalField("Width, percentage", default=1.0, max_digits=5, decimal_places=4)
     height = models.DecimalField("Distance from top, percentage", default=0.0, max_digits=5, decimal_places=4)
+    is_bold = models.BooleanField(default=False)
+    is_italic = models.BooleanField(default=False)
     alignment = models.CharField(default='left', choices=(
         ('left', 'Left'),
         ('center', 'Centre'),
@@ -58,10 +73,12 @@ class Field(models.Model):
     card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
 
     def css(self):
-        return 'width:{}%; top:{}%; text-align:{};'.format(
+        return 'width:{}%; top:{}%; text-align:{}; font-weight:{}; font-style:{};'.format(
             self.width * 100,
             self.height * 100,
-            self.alignment
+            self.alignment,
+            'bold' if self.is_bold else 'normal',
+            'italic' if self.is_italic else 'normal',
         )
 
     def __str__(self):
@@ -76,20 +93,36 @@ class Card(models.Model):
     title = models.CharField(null=True, max_length=255)
     count = models.IntegerField(default=4)
     card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
+    data = models.CharField(max_length=255, default='{}')
 
     def __str__(self):
         return self.title
 
-    def all_fields(self):
-        type_fields = self.card_type.field_set.all()
+    @property
+    def patterns(self):
+        return [
+            ('{title}', self.title),
+            ('{count}', str(self.count)),
+        ]
 
-        for field in type_fields:
-            if not self.fields.get(field=field):
-                print('don\'t have field {}'.format(field.name))
-            else:
-                print('Has data for field {}'.format(field.name))
+    @property
+    def fields(self):
+        fields = []
 
-        return ''
+        for field in self.card_type.field_set.all():
+            try:
+                data = self.fielddata_set.get(field=field)
+                field.value = data.value
+            except:
+                field.value = field.template
+                field.inherited = True
+
+            for pattern, replacement in self.patterns:
+                field.value = field.value.replace(pattern, replacement)
+
+            fields.append(field)
+
+        return fields
 
 
 class FieldData(models.Model):
@@ -98,9 +131,11 @@ class FieldData(models.Model):
     """
     value = models.CharField(max_length=255)
     field = models.ForeignKey(Field, related_name='+', on_delete=models.CASCADE)
-    card = models.ForeignKey(Card, related_name='fields', on_delete=models.CASCADE)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+
+    def name(self):
+        return self.field.name
 
     def __str__(self):
         return self.value
-
 

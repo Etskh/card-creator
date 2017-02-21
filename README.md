@@ -38,20 +38,20 @@
 - each card has a collection of rules
 - rules are text with a decimal weight of benefit or detriment
 - rules can be put into a field with the `{rules}` string
-- create integer values for each card, like fields
-- these numbers cannot be null
+- each card-type has a set of data that each card must possess
+- each card has a dataset of the data that corresponds with the values and names of the card-type data. Possible implementation: text-field of an array of integers: `[1,2,3,4,5]`
 - fields can reference data in the cards with `{#data-name}`
 
 
 ## MILESTONE 4
 ### Advanced Card Editing:
 - ✓ remove style from model
-- add italic boolean to field
-- add bold boolean to field
+- ✓ add italic boolean to field
+- ✓ add bold boolean to field
 - add font-family selectbox to field
     font-family: 'Open Sans Condensed', sans-serif;
     font-family: 'Amatic SC', cursive;
-- add text-size boolean to field
+- add text-size number to field
 - changing fields in the text edit view popup
 - create a new card creates a new row in the table
 - create side bar for cardtype editing
@@ -88,7 +88,7 @@
 - project list page has names of all projects to go to their page
 
 
-## MILESTONE 8
+## MILESTONE 7
 ### Art on Card
 - allow file uploads as hashed jpgs
 - as an extra piece of data for each card: have unique art
@@ -97,7 +97,7 @@
 - `{art}` puts the image in the field with pos:abs, w/h:100%
 
 
-## MILESTONE 7
+## MILESTONE 8
 ### Users
 - if not logged in, show log-in screen to log-in
 - upon login, go to project list
@@ -110,13 +110,13 @@
 ## MILESTONE 9
 ### Symbols
 - create a symbol group and several icons for use in the fields
-- symbols can be referenced in fields with [@symbol-name]
+- symbols can be referenced in fields with `{@symbol-name}`
 - card-data can be null, and if a card-data is null, it it replaced by a symbol
 - along with symbols, projects have enumerations which are like select box items
 - enumerations can be added like tags to cards
 
 
-## MILESTONE 12
+## MILESTONE 10
 ### Maff n' Graff
 - every card has the curve computed from:
    data (nominator or denominator) * their scale

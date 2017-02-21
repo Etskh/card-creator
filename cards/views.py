@@ -4,42 +4,6 @@ from django.http import JsonResponse
 from .models import CardType, Field
 
 
-class FieldView:
-
-    def __init__(self, field, view):
-        self.name = field.name
-        try:
-            data = view.card.fields.get(field=field)
-            self.value = data.value
-        except:
-            self.value = field.template
-
-        for pattern, replacement in view.patterns:
-            self.value = self.value.replace(pattern, replacement)
-
-
-class CardView:
-
-    def __init__(self, card):
-        self.fields = []
-        self.card = card
-        self.patterns = [
-            ('{title}', card.title),
-            ('{count}', str(card.count)),
-        ]
-
-        for field in card.card_type.field_set.all():
-            self.fields.append(FieldView(field, self))
-
-    @staticmethod
-    def create_from_type(card_type):
-        card_views = []
-        cards = card_type.card_set.all()
-        for card in cards:
-            card_views.append(CardView(card))
-        return card_views
-
-
 def home(request):
     card_types = CardType.objects.all()
     return render(request, 'core/default.html', {
@@ -55,7 +19,7 @@ def view(request, type_id):
         'view_name': 'view',
         'card_types': card_types,
         'cardtype': card_type,
-        'cards': CardView.create_from_type(card_type),
+        'cards': card_type.card_set.all(),
     })
 
 
@@ -110,6 +74,12 @@ def field_edit(request, field_id=None):
 
         if 'name' in request.POST:
             field.name = request.POST['name']
+
+        if 'is_bold' in request.POST:
+            field.is_bold = request.POST['is_bold'] == 'true'
+
+        if 'is_italic' in request.POST:
+            field.is_italic = request.POST['is_italic'] == 'true'
 
         if 'template' in request.POST:
             field.template = request.POST['template']

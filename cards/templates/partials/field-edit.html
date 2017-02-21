@@ -10,19 +10,18 @@
         <div class="input-group">
             <span class="input-group-addon" id="field-name-label">Name</span>
             <input type="text" placeholder="Name" aria-describedby="field-name-label" value="{{ field.name }}" data-id="{{ field.pk }}" class="field-name form-control"/>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
         </div>
     </div>
     <div class="row">
-        <!--
-        <div class="btn-group" data-to ggle="buttons">
-            <button type="button" class="btn btn-default">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default field-bold {% if field.is_bold %}active{% endif %}">
                 <span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default field-italic {% if field.is_italic %}active{% endif %}">
                 <span class="glyphicon glyphicon-italic" aria-hidden="true"></span>
             </button>
         </div>
-        -->
         <div class="btn-group" data-toggle="buttons">
             {% include 'partials/field-alignment.html' with alignment='left' %}
             {% include 'partials/field-alignment.html' with alignment='center' %}
@@ -33,6 +32,7 @@
         <div class="input-group">
             <span class="input-group-addon" id="field-template-label">Template</span>
             <input type="text" placeholder="Template" aria-describedby="field-template-label" value="{{ field.template }}" data-id="{{ field.pk }}" class="field-template form-control"/>
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
         </div>
     </div>
     <div class="row">

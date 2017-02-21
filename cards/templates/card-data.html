@@ -1,20 +1,36 @@
 {% extends 'core/default.html' %}
 
 {% block content %}
-<h3>Showing {{ cards|length }} card instances, totalling {{ total_card_count }} cards</h3>
-<div class="card-list cardtype-{{ cardtype.name }}">
-    <table class="table">
-        <tr>
-            <td>Title</td>
-            <td>Count</td>
-        </tr>
-    {% for card in cards %}
-        {{ card.all_fields }}
-    <tr id="card-{{ card.pk }}" data-name="{{ card.title }}">
-        <td>{{ card.title }}</td>
-        <td>{{ card.count }}</td>
-    </tr>
-    {% endfor %}
-    </table>
+<div class="col-md-12">
+    <h3>Showing {{ cards|length }} card instances, totalling {{ total_card_count }} cards</h3>
+    <div class="card-list cardtype-{{ cardtype.name }}">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Count</td>
+                    {% for field in cardtype.field_set.all %}
+                        <td>{{ field.name }}</td>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for card in cards %}
+            <tr id="card-{{ card.pk }}" data-name="{{ card.title }}">
+                <td>{{ card.title }}</td>
+                <td>{{ card.count }}</td>
+                {% for field in card.fields %}
+                    {% if field.inherited %}
+                        <td style="color:#BBB;">Inherited</td>
+                    {% else %}
+                        <td>{{ field.value }}</td>
+                    {% endif %}
+                {% endfor %}
+                <td></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

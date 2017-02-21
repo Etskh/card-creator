@@ -73,6 +73,7 @@ nav.card-nav .navbar-nav>.active>a:focus {
     background: #DDD;
     color: #222;
     text-shadow:#FFF 0px 0px 4px;
+    box-shadow: #000 0px 0px 20px;
 }
 .card .field {
     position:absolute;

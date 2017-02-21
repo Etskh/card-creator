@@ -13,7 +13,6 @@ class FieldTestCase(TestCase):
         )
         Field.objects.create(
             name='TestField',
-            style='color:#F00',
             card_type=CardType.objects.get(name="TestCardType")
         )
 
@@ -22,6 +21,6 @@ class FieldTestCase(TestCase):
         title = Field.objects.get(name="TestField")
         self.assertEqual(
             title.css(),
-            'width:100.0000%; top:0.0000%; text-align:left; color:#F00;'
+            'width:100.0000%; top:0.0000%; text-align:left; font-weight:normal; font-style:normal;'
         )
 

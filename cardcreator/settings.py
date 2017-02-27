@@ -25,7 +25,9 @@ SECRET_KEY = '#^!zj%id)3k@v5+wp-ifa0o7xqpjy7e$v%i+*9zujli28m*1jc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'card-creator.herokuapp.com',
+]
 
 
 # Application definition

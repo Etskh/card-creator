@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
+from django.views import View
 
 from .models import CardType, Field
 
@@ -47,28 +48,30 @@ def data(request, type_id):
     })
 
 
-def field_edit(request, field_id=None):
-    if request.method == 'PUT':
-        card_type = get_object_or_404(CardType, name='Item')
-        field = Field.objects.create(
-            name='new-field',
-            card_type=card_type,
-        )
-        return render(request, 'partials/field-span.html', {
-            'field': field
-        })
 
-    field = get_object_or_404(Field, pk=field_id)
-    if request.method == 'GET':
-        return render(request, 'partials/field-edit.html', {
-            'field': field
-        })
-    elif request.method == 'DELETE':
-        field.delete()
+class CardTypeView(View):
+
+    def post(self, request, card_type_id):
+        card_type = get_object_or_404(CardType, pk=card_type_id)
+        card_type.name = request.POST['name']
+
+        card_type.save()
+
         return JsonResponse({
             'success': True
         })
-    elif request.method == 'POST':
+
+
+class FieldView(View):
+
+    def get(self, request, field_id):
+        field = get_object_or_404(Field, pk=field_id)
+        return render(request, 'partials/field-edit.html', {
+            'field': field,
+        })
+
+    def post(self, request, field_id):
+        field = get_object_or_404(Field, pk=field_id)
         if 'top' in request.POST:
             field.height = request.POST['top']
 
@@ -91,4 +94,21 @@ def field_edit(request, field_id=None):
 
         return JsonResponse({
             'success': True
+        })
+
+    def delete(self, request, field_id):
+        field = get_object_or_404(Field, pk=field_id)
+        field.delete()
+        return JsonResponse({
+            'success': True
+        })
+
+    def put(self, request):
+        card_type = get_object_or_404(CardType, name='Items')
+        field = Field.objects.create(
+            name='new-field',
+            card_type=card_type,
+        )
+        return render(request, 'partials/field-span.html', {
+            'field': field
         })

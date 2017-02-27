@@ -16,13 +16,18 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from cards import views as cardviews
+from cards.views import FieldView, CardTypeView
 
 urlpatterns = [
+    # Admin pages
     url(r'^admin/', admin.site.urls),
+    # Main views
     url(r'^$', cardviews.home),
     url(r'^type/(?P<type_id>[0-9]+)$', cardviews.view),
     url(r'^type/(?P<type_id>[0-9]+)/layout$', cardviews.layout),
     url(r'^type/(?P<type_id>[0-9]+)/data$', cardviews.data),
-    url(r'^field/(?P<field_id>[0-9]+)$', cardviews.field_edit),
-    url(r'^field$', cardviews.field_edit),
+    # Rest
+    url(r'^field$', FieldView.as_view()),
+    url(r'^field/(?P<field_id>[0-9]+)$', FieldView.as_view()),
+    url(r'^cardtype/(?P<card_type_id>[0-9]+)$', CardTypeView.as_view()),
 ]

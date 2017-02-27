@@ -35,11 +35,8 @@
 - ✓ if a card doesn't have a FieldData, use the template
 - ✓ you can use `{title}` in the fields to print out the title
 - ✓ you can use `{count}` in the fields to print out the count
-- each card has a collection of rules
-- rules are text with a decimal weight of benefit or detriment
-- rules can be put into a field with the `{rules}` string
-- each card-type has a set of data that each card must possess
-- each card has a dataset of the data that corresponds with the values and names of the card-type data. Possible implementation: text-field of an array of integers: `[1,2,3,4,5]`
+- ✓ each card-type has a set of data that each card must possess
+- ✓ each card has a dataset of the data that corresponds with the values and names of the card-type data. Possible implementation: text-field of an array of integers: `[1,2,3,4,5]`
 - fields can reference data in the cards with `{#data-name}`
 
 
@@ -48,15 +45,17 @@
 - ✓ remove style from model
 - ✓ add italic boolean to field
 - ✓ add bold boolean to field
+- ✓ create side bar for cardtype editing
+- ✓ change name of cardtype
+- card types can add data to it from the side bar
+- changing data name will autosave
+- clicking data X will remove the data node
 - add font-family selectbox to field
     font-family: 'Open Sans Condensed', sans-serif;
     font-family: 'Amatic SC', cursive;
 - add text-size number to field
 - changing fields in the text edit view popup
 - create a new card creates a new row in the table
-- create side bar for cardtype editing
-- change name of cardtype
-- change background of cardtype
 
 
 ## MILESTONE 5
@@ -114,6 +113,9 @@
 - card-data can be null, and if a card-data is null, it it replaced by a symbol
 - along with symbols, projects have enumerations which are like select box items
 - enumerations can be added like tags to cards
+- each card has a collection of rules
+- rules are text with a decimal weight of benefit or detriment
+- rules can be put into a field with the `{rules}` string
 
 
 ## MILESTONE 10

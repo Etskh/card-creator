@@ -20,12 +20,27 @@
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         <span class="text">...</span>
     </div>
+    <!--
+        Card type name
+    -->
     <div class="row">
         <div class="input-group">
             <span class="input-group-addon" id="cardtype-name-label">Name</span>
             <input type="text" placeholder="Name" aria-describedby="cardtype-name-label" class="cardtype-name form-control" data-id="{{ cardtype.pk }}" value="{{ cardtype.name }}"/>
             <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
         </div>
+    </div>
+    <!--
+        Custom data
+    -->
+    <h4>Custom Data</h4>
+    <div class="row">
+        <button class="btn btn-success" id="add-data">+ Add data type</button>
+    </div>
+    <div class="row" id="data-list">
+        {% for data in cardtype.cardtypedata_set.all %}
+            {% include 'partials/data-edit.html' %}
+        {% endfor %}
     </div>
 </div>
 <div class="card-list cardtype-{{ cardtype.name }}">
@@ -44,6 +59,11 @@
     </div>
 
     <hr/>
+
+    <div class="alert alert-danger" id="field-alert" style="display:none" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="text">...</span>
+    </div>
 
     <div id="field-edit">
         <p>Select a field to begin editing</p>

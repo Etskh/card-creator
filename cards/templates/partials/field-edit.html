@@ -1,19 +1,19 @@
 <div>
-    <div class="alert alert-danger" id="field-alert" style="display:none" role="alert">
-        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-        <span class="text">...</span>
-    </div>
     <div class="row">
         <p>Drag the field around to move it vertically</p>
     </div>
+
     <div class="row">
+        <h4>Name</h4>
         <div class="input-group">
             <span class="input-group-addon" id="field-name-label">Name</span>
             <input type="text" placeholder="Name" aria-describedby="field-name-label" value="{{ field.name }}" data-id="{{ field.pk }}" class="field-name form-control"/>
             <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
         </div>
     </div>
+
     <div class="row">
+        <h4>Style</h4>
         <div class="btn-group">
             <button type="button" class="btn btn-default field-bold {% if field.is_bold %}active{% endif %}">
                 <span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
@@ -28,7 +28,9 @@
             {% include 'partials/field-alignment.html' with alignment='right' %}
         </div>
     </div>
+
     <div class="row">
+        <h4>Default Value</h4>
         <div class="input-group">
             <span class="input-group-addon" id="field-template-label">Template</span>
             <input type="text" placeholder="Template" aria-describedby="field-template-label" value="{{ field.template }}" data-id="{{ field.pk }}" class="field-template form-control"/>

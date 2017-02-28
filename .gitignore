@@ -92,4 +92,4 @@ ENV/
 .idea
 
 # Static files
-static/
+public/

@@ -37,7 +37,10 @@
 - ✓ you can use `{count}` in the fields to print out the count
 - ✓ each card-type has a set of data that each card must possess
 - ✓ each card has a dataset of the data that corresponds with the values and names of the card-type data. Possible implementation: text-field of an array of integers: `[1,2,3,4,5]`
-- fields can reference data in the cards with `{#data-name}`
+- ✓ can add data type to card type
+- ✓ can view data types
+- ✓ can rename data type
+- ✓ fields can reference data in the cards with `{#data-name}`
 
 
 ## MILESTONE 4
@@ -47,22 +50,22 @@
 - ✓ add bold boolean to field
 - ✓ create side bar for cardtype editing
 - ✓ change name of cardtype
-- card types can add data to it from the side bar
-- changing data name will autosave
-- clicking data X will remove the data node
 - add font-family selectbox to field
+    font-family: 'Times New Roman', serif;
+    font-family: 'Arial', sans-serif;
     font-family: 'Open Sans Condensed', sans-serif;
     font-family: 'Amatic SC', cursive;
 - add text-size number to field
 - changing fields in the text edit view popup
 - create a new card creates a new row in the table
+- can remove data type
 
 
 ## MILESTONE 5
 ### Automatic Deployment
-- add secret_key env to heroku account
-- add secret_key env to pycharm environment
-- add travis build key to heroku account
+- ✓ add secret_key env to heroku account
+- ✓ add secret_key env to pycharm environment
+- ✓ add travis build key to heroku account
 - ✓ spruce up the page
   <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
   body { font-family: 'Oswald', sans-serif; }

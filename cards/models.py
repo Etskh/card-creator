@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 from django.contrib.auth.admin import User
 
@@ -98,12 +100,33 @@ class Card(models.Model):
     def __str__(self):
         return self.title
 
+    def data_value(self, name):
+        values = json.loads(self.data)
+
+        try:
+            return str(values[name])
+        except KeyError:
+            values[name] = 0
+            self.data = json.dumps(values)
+            self.save()
+
+        return values[name]
+
     @property
     def patterns(self):
-        return [
+        pattern_list = [
             ('{title}', self.title),
             ('{count}', str(self.count)),
         ]
+
+        for data in self.card_type.cardtypedata_set.all():
+            pattern_list.append(
+                ('{#' + data.name + '}', self.data_value(data.name)),
+            )
+
+        print(pattern_list)
+
+        return pattern_list
 
     @property
     def fields(self):

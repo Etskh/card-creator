@@ -18,16 +18,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
+try:
+    secret_defined = True if os.environ['SECRET_KEY'] else False
+except KeyError:
+    secret_defined = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#^!zj%id)3k@v5+wp-ifa0o7xqpjy7e$v%i+*9zujli28m*1jc'
+SECRET_KEY = os.environ['SECRET_KEY'] if secret_defined else '#^!zj%id)3k@v5+wp-ifa0o7xqpjy7e$v%i+*9zujli28m*1jc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if secret_defined else True
 
 ALLOWED_HOSTS = [
     'card-creator.herokuapp.com',
 ]
+if not secret_defined:
+    ALLOWED_HOSTS.append('localhost')
 
 
 # Application definition
@@ -54,6 +60,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'cardcreator.urls'
+
+APPEND_SLASH = False
 
 TEMPLATES = [
     {
@@ -122,5 +130,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static/'
+STATIC_ROOT = 'public/'
 

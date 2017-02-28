@@ -4,6 +4,7 @@ var createInputTimer = function( options ) {
     var timer = null;
 
     options.$elem.keyup( function() {
+        var target = this;
         if( timer ) {
             clearTimeout(timer);
         }
@@ -11,7 +12,7 @@ var createInputTimer = function( options ) {
 
             timer = null;
 
-            var value = options.$elem.val();
+            var value = $(target).val();
             if( options.regex ) {
                 var $alert = options.$errorElem;
                 if( !value.match(options.regex) ) {
@@ -24,15 +25,52 @@ var createInputTimer = function( options ) {
                 }
             }
 
-            options.success(value);
-            options.$elem.addClass('success');
+            options.success(value, $(target));
+            $(target).addClass('success');
             setTimeout(function(){
-                options.$elem.addClass('success');
+                $(target).addClass('success');
             }, 500)
-            console.log('Saved');
+            console.log(`Saved: {target.id()}`);
         }, 1000);
     });
 }
+
+
+var CardData = {
+    init: function() {
+        createInputTimer({
+            $elem: $('.datatype-name'),
+            regex: /^[a-zA-Z\-]+$/,
+            $errorElem: $('#cardtype-alert'),
+            errorMessage: 'Name can only contain letters, and dashes',
+            success: function( value, $element ) {
+                var id = $element.data('id');
+                CardData.save(id, {
+                    name: value,
+                }, function() {
+                    // empty
+                });
+            },
+        });
+    },
+    create: function(callback) {
+        $.ajax({
+            url: '/data',
+            type: 'PUT',
+            success: function(response) {
+                $('#data-list').append(response);
+                CardData.init();
+            }
+        });
+    },
+    save: function(id, data, callback) {
+        $.post('/data/' + id, data, function(response){
+            if( callback ) {
+                callback();
+            }
+        });
+    },
+};
 
 
 var CardType = {
@@ -158,13 +196,17 @@ var Field = {
 
 $(document).ready( function() {
 
-
-
     $('.selectable-field').click(Field.click);
 
     $('#add-field').click(function(){
         Field.create();
     });
+
+    $('#add-data').click(function(){
+        CardData.create();
+    });
+    CardData.init();
+
 
     createInputTimer({
         $elem: $('.cardtype-name'),

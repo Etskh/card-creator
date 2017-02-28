@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views import View
 
-from .models import CardType, Field
+from .models import CardType, Field, CardTypeData
 
 
 def home(request):
@@ -48,7 +48,6 @@ def data(request, type_id):
     })
 
 
-
 class CardTypeView(View):
 
     def post(self, request, card_type_id):
@@ -61,6 +60,28 @@ class CardTypeView(View):
             'success': True
         })
 
+
+class CardDataView(View):
+
+    def put(self, request):
+        card_type = get_object_or_404(CardType, name='Items')
+        card_data = CardTypeData.objects.create(
+            name='new-data-type',
+            card_type=card_type,
+        )
+        return render(request, 'partials/data-edit.html', {
+            'data': card_data
+        })
+
+    def post(self, request, card_data_id):
+        card_data = get_object_or_404(CardTypeData, pk=card_data_id)
+        card_data.name = request.POST['name']
+
+        card_data.save()
+
+        return JsonResponse({
+            'success': True
+        })
 
 class FieldView(View):
 

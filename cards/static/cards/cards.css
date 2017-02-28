@@ -55,7 +55,6 @@ nav.card-nav .navbar-nav>.active>a:focus {
 }
 .controls .row {
     margin: 4px;
-    text-align: center;
 }
 
 
@@ -98,5 +97,8 @@ nav.card-nav .navbar-nav>.active>a:focus {
 #field-edit input {
     padding: 8px;
     color: #000;
+}
+.cardtype-name {
+    font-size: 120%;
 }
 

@@ -31,6 +31,15 @@ class CardType(models.Model):
 
     REASONABLE_MARGIN = 0.12
 
+    @property
+    def editable_fields(self):
+        fields = []
+        for field in self.field_set.all():
+            if len(field.template) == 0:
+                fields.append(field)
+
+        return fields
+
     def margin(self):
         return CardType.REASONABLE_MARGIN
 
@@ -57,6 +66,24 @@ class CardTypeData(models.Model):
         return self.name
 
 
+class Font(models.Model):
+    name = models.CharField(max_length=255)
+    type = models.CharField(max_length=255, default='sans-serif', choices=(
+        ('sans-serif', 'Sans-serif'),
+        ('serif', 'Serif'),
+        ('cursive', 'Cursive'),
+    ))
+
+    def css(self):
+        return '\'{}\', {};'.format(
+            self.name,
+            self.type
+        )
+
+    def __str__(self):
+        return self.name
+
+
 class Field(models.Model):
     """
     A single row on a card
@@ -67,6 +94,8 @@ class Field(models.Model):
     height = models.DecimalField("Distance from top, percentage", default=0.0, max_digits=5, decimal_places=4)
     is_bold = models.BooleanField(default=False)
     is_italic = models.BooleanField(default=False)
+    font = models.ForeignKey(Font, related_name='+', blank=True, null=True, on_delete=models.SET_NULL)
+    font_size = models.DecimalField("Font-size, percentage", default=100, max_digits=3, decimal_places=0)
     alignment = models.CharField(default='left', choices=(
         ('left', 'Left'),
         ('center', 'Centre'),
@@ -75,12 +104,20 @@ class Field(models.Model):
     card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
 
     def css(self):
-        return 'width:{}%; top:{}%; text-align:{}; font-weight:{}; font-style:{};'.format(
+
+        if not self.font:
+            font = Font.objects.get(name='Arial')
+        else:
+            font = self.font
+
+        return 'width:{}%; top:{}%; text-align:{}; font-weight:{}; font-style:{}; font-family:{}; font-size:{}%;'.format(
             self.width * 100,
             self.height * 100,
             self.alignment,
             'bold' if self.is_bold else 'normal',
             'italic' if self.is_italic else 'normal',
+            font.css(),
+            self.font_size,
         )
 
     def __str__(self):
@@ -112,6 +149,9 @@ class Card(models.Model):
 
         return values[name]
 
+    def dataset(self):
+        return [(data.name, self.data_value(data.name)) for data in self.card_type.cardtypedata_set.all()]
+
     @property
     def patterns(self):
         pattern_list = [
@@ -123,8 +163,6 @@ class Card(models.Model):
             pattern_list.append(
                 ('{#' + data.name + '}', self.data_value(data.name)),
             )
-
-        print(pattern_list)
 
         return pattern_list
 
@@ -143,6 +181,19 @@ class Card(models.Model):
             for pattern, replacement in self.patterns:
                 field.value = field.value.replace(pattern, replacement)
 
+            fields.append(field)
+
+        return fields
+
+    @property
+    def editable_fields(self):
+        fields = []
+        for field in self.card_type.editable_fields:
+            try:
+                data = self.fielddata_set.get(field=field)
+                field.value = data.value
+            except:
+                field.value = None
             fields.append(field)
 
         return fields

@@ -1,9 +1,33 @@
 # card-creator
 
 
+## Russian Demons
+- make the portrait card type
+- make the ability card type
+- make the wealth card type
 
-## MILESTONE 1
-### Basic Type Editing
+## Market Research
+- find the "competitors"
+- start talks with printers
+- get it out to people
+  - Ben
+  - Mik
+  - Riley
+
+## Startrek Chthulhu
+- make the profession card type
+- make the alien card type
+- make the character card type
+- make the item card type
+
+## Other Users
+
+
+
+
+
+## Completed
+### Milestone 1: Basic Type Editing
 - ✓ can edit a card type
 - ✓ fields can be selected
 - ✓ fields can be dragged to move around
@@ -11,10 +35,7 @@
 - ✓ can modify alignment
 - ✓ add fields to the card type
 - ✓ remove fields from the card type
-
-
-## MILESTONE 2
-### Basic Card Editing
+### Milestone 2: Basic Card Editing
 - ✓ a bar up top to show all the card types
   `[             -dk. grey-                      ]`
 - ✓ in the bar, list all card types as buttons
@@ -26,10 +47,7 @@
 - ✓ a table of existing cards
   `[ view | layout | data   -light green-        ]`
 - ✓ each card has a number beside it denoting how many in the deck (4x)
-
-
-## MILESTONE 3
-### Field Patterns
+### Milestone 3: Field Patterns
 - ✓ cards have a template field that is modifyable
 - ✓ there is a callback `onkeyup()` that sets a Timeout which will save the field when it is up. If it's called again, it resets the timer
 - ✓ if a card doesn't have a FieldData, use the template
@@ -50,25 +68,36 @@
 - ✓ add bold boolean to field
 - ✓ create side bar for cardtype editing
 - ✓ change name of cardtype
-- add font-family selectbox to field
-    font-family: 'Times New Roman', serif;
+- ✓ add font-family selectbox to field
     font-family: 'Arial', sans-serif;
     font-family: 'Open Sans Condensed', sans-serif;
     font-family: 'Amatic SC', cursive;
-- add text-size number to field
+- ✓ add text-size number to field
+- ✓ text-size changes font-size
+- ✓ changing text-side saves in model
 - changing fields in the text edit view popup
 - create a new card creates a new row in the table
-- can remove data type
 
 
 ## MILESTONE 5
-### Automatic Deployment
+### Code Health
 - ✓ add secret_key env to heroku account
 - ✓ add secret_key env to pycharm environment
 - ✓ add travis build key to heroku account
 - ✓ spruce up the page
   <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
   body { font-family: 'Oswald', sans-serif; }
+- cleanup: move Font model to its own app
+- cleanup: generalise the REST APIs in the views
+- cleanup: move the URLs to the cards module
+- improvement: write tests for model properties
+- cleanup: close the tickets that are open
+- improvement: use the PostgreSQL database
+- improvement: check data that is being saved on server wtih regexes too
+- if there's only one of them, use id not class
+- ✓ use Open Sans Condensed for site
+- ✓ use Oswald for the cards
+- can remove data type
 
 
 ## MILESTONE 6
@@ -110,22 +139,30 @@
 
 
 ## MILESTONE 9
-### Symbols
-- create a symbol group and several icons for use in the fields
+### Symbols, Tags, and Advanced Patterns
+- can create symbols that have an image and a name
+- can rename symbols
+- can delete symbols
+- create a symbol group which serves as a folder for symbols
 - symbols can be referenced in fields with `{@symbol-name}`
-- card-data can be null, and if a card-data is null, it it replaced by a symbol
+- `{@symbol-name#height}` will put symbol `symbol-name` in the card `height` times
 - along with symbols, projects have enumerations which are like select box items
-- enumerations can be added like tags to cards
-- each card has a collection of rules
-- rules are text with a decimal weight of benefit or detriment
-- rules can be put into a field with the `{rules}` string
+- `{#height:One,Two}` will show `One` if `height` is == 1 and `Two` if it's 2
+- can create tags with a name and value
+- can create up to 10 tags per card type
+- tags can be deleted
+- tags can only be deleted if unused
+- tags can be added at will to cards with toggleable buttons
+- tags can be seen in the data table
+- tags can be put as labels on the card with `{tags}`
 
 
 ## MILESTONE 10
 ### Maff n' Graff
+- if a field is overwritten, the user can assign a value
 - every card has the curve computed from:
    data (nominator or denominator) * their scale
-   rule benefit or detriment * situational
+   field benefit or detriment * situational
 - the jedi value is visible in the data table
 - it is also graphable
 - with the data and rules, we can compute a graph
@@ -133,21 +170,8 @@
 - we can go from one cardtype to the graph show the jedi curve
 
 
+## Bidness
+- look into digital printing solutions
+- upload of a CSV for the data in cards
+- validate session against all access and changes
 
-
-## Features
-
-### MVP
-- each card has a set of rules that are { text, weight }
-- each card-type has a set of data that each card must possess
-- each card has a dataset of the data that corresponds with the values and names of the card-type data. Possible implementation: text-field of an array of integers: `[1,2,3,4,5]`
-- the follow fields are accessible with vanilla braces: `{title}`, `{count}`, `{rules}`. Possible implementations: `get_fields()` function on a card- this will return a full array of the Fields, complete with text. Other implementation: having a `CardView` object which has `get_fields()` function and 
-  - `{title}`: the title of the card
-  - `{count}`: the number of this type of card
-  - `{rules}`: a list of the rules of the card
-- card-data can be referenced with braces and a hash proceeding the name. For example: {#attack}, {#defence}, {#cost}
-
-### Eventually
-- project symbols can be printed out with an "at" symbol proceeding the name for example: {@red-mana}, {@blue-mana}...
-- symbols can be repeated with card-data, so if the user wants {@heart} to appear three times on the card to represent the number of #wounds, they can add {@heart|#wounds}
-- each card has unique art, which is placed 

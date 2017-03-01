@@ -2,8 +2,7 @@
 
 var createInputTimer = function( options ) {
     var timer = null;
-
-    options.$elem.keyup( function() {
+    var callback = function() {
         var target = this;
         if( timer ) {
             clearTimeout(timer);
@@ -32,7 +31,15 @@ var createInputTimer = function( options ) {
             }, 500)
             console.log(`Saved: {target.id()}`);
         }, 1000);
-    });
+    } // callback()
+
+
+    if( options.$elem.attr('type') == 'number' ) {
+        options.$elem.change(callback);
+    }
+    else {
+        options.$elem.keyup(callback);
+    }
 }
 
 
@@ -117,7 +124,6 @@ var Field = {
                     });
                 },
             });
-
             $('.field-alignment').change(function(e){
                 Field.save(id, {
                     alignment: e.target.value,
@@ -151,6 +157,37 @@ var Field = {
                         'fontStyle': isItalic ? 'italic' : 'normal',
                     });
                 });
+            });
+            $('.choose-font').click(function(){
+                var fontId = $(this).data('id');
+                var fontCss = $(this).css('fontFamily');
+                var fontName = $(this).text();
+
+                Field.save(id, {
+                    font_id: fontId,
+                }, function() {
+                    $('#font-select').text(fontName)
+                    $('#font-select').css({
+                        'fontFamily': fontCss
+                    });
+                    $('.selectable-field.active').css({
+                        'fontFamily': fontCss
+                    });
+                });
+            });
+            createInputTimer({
+                $elem: $('#font-size'),
+                success: function( value ) {
+                    console.log('asdf');
+                    var size = parseInt(value);
+                    Field.save(id, {
+                        font_size: size,
+                    }, function() {
+                        $('.selectable-field.active').css({
+                            'fontSize': size + '%',
+                        });
+                    });
+                },
             });
 
             $('#field-delete').click(function() {
@@ -194,8 +231,20 @@ var Field = {
 };
 
 
+
+var Data = {
+    open: function(id, callback) {
+        var html = '<h1>This is card '+ id +'!</h1>';
+        callback(html);
+    }
+};
+
+
 $(document).ready( function() {
 
+    //
+    // Card type editing
+    //
     $('.selectable-field').click(Field.click);
 
     $('#add-field').click(function(){
@@ -206,7 +255,6 @@ $(document).ready( function() {
         CardData.create();
     });
     CardData.init();
-
 
     createInputTimer({
         $elem: $('.cardtype-name'),
@@ -225,5 +273,21 @@ $(document).ready( function() {
                 // empty
             });
         },
+    });
+
+
+
+    //
+    // Card data editing
+    //
+    $('.card-row').click(function() {
+        var target = this;
+        var id = $(this).data('id');
+        var name = $(this).data('name');
+        Data.open(id, function(html) {
+            $('#card-edit-modal .modal-title').text(name);
+            $('#card-edit-modal .modal-body').html(html);
+            $('#card-edit-modal').modal('show');
+        });
     });
 });

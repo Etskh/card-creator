@@ -4,7 +4,7 @@ BODY {
     background: #223;
     color: #EEE;
     font-weight: 300;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Open Sans Condensed', sans-serif;
 }
 
 TABLE {
@@ -13,6 +13,24 @@ TABLE {
 }
 TD {
     color: #FFF;
+}
+TD INPUT {
+    color: #000;
+    text-align: center;
+    width: 64px;
+}
+THEAD TD {
+    font-weight: bold;
+}
+TBODY TR:hover {
+    background: rgba(150,150,150,0.2);
+    cursor: pointer;
+}
+TD.data-header {
+    background: rgba(50,50,150,0.2);
+}
+TD.field-header {
+    background: rgba(150,90,50,0.2);
 }
 
 nav.navbar-default {
@@ -60,10 +78,14 @@ nav.card-nav .navbar-nav>.active>a:focus {
 
 
 
-.card-list {
+.card-list, .card-edit-list {
     margin: 0.3in;
     display: inline-block;
     vertical-align: top;
+}
+.card-list .card {
+    float: left;
+    margin-right: 64px;
 }
 .card {
     position:relative;
@@ -79,7 +101,15 @@ nav.card-nav .navbar-nav>.active>a:focus {
     cursor: pointer;
     border: solid 4px transparent;
 }
-
+.card-count {
+    text-shadow:#333 0px 0px 4px;
+    color:#FFF;
+    font-weight:bold;
+    position:absolute;
+    font-size: 48px;
+    top:-32px;
+    left:95%;
+}
 .inner-card {
     position:relative;
     background: #EEE;
@@ -102,3 +132,8 @@ nav.card-nav .navbar-nav>.active>a:focus {
     font-size: 120%;
 }
 
+
+
+.modal-content {
+    background: #333;
+}

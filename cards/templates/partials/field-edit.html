@@ -12,8 +12,8 @@
         </div>
     </div>
 
+    <h4>Style</h4>
     <div class="row">
-        <h4>Style</h4>
         <div class="btn-group">
             <button type="button" class="btn btn-default field-bold {% if field.is_bold %}active{% endif %}">
                 <span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
@@ -26,6 +26,22 @@
             {% include 'partials/field-alignment.html' with alignment='left' %}
             {% include 'partials/field-alignment.html' with alignment='center' %}
             {% include 'partials/field-alignment.html' with alignment='right' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button class="btn btn-default dropdown-toggle" id="font-select" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:'{% if field.font %}{{field.font.name}}{% else %}Arial{% endif %}';">
+                    {% if field.font %}{{field.font.name}}{% else %}Arial{% endif %}
+                </button>
+                <ul class="dropdown-menu">
+                    {% for font in fonts %}
+                    <li><a href="#" class="choose-font" data-id="{{ font.pk }}" style="font-family:{{ font.css }};">{{ font.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div><!-- /btn-group -->
+            <input type="number" class="form-control" aria-label="..." id="font-size" value="{{ field.font_size }}">
+            <span class="input-group-addon">%</span>
         </div>
     </div>
 

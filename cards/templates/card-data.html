@@ -7,30 +7,60 @@
         <table class="table">
             <thead>
                 <tr>
+                    <td colspan="2">
+                        <button class="btn btn-success" id="add-card">+ Add card</button>
+                    </td>
+                    <td colspan="{{ cardtype.cardtypedata_set.all|length }}">Data</td>
+                    <td colspan="{{ cardtype.field_set.all|length }}">Fields</td>
+                <tr>
                     <td>Title</td>
                     <td>Count</td>
-                    {% for field in cardtype.field_set.all %}
-                        <td>{{ field.name }}</td>
+                    {% for datatype in cardtype.cardtypedata_set.all %}
+                        <td class="data-header">{{ datatype.name }}</td>
+                    {% endfor %}
+                    {% for field in cardtype.editable_fields %}
+                        <td class="field-header">{{ field.name }}</td>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
             {% for card in cards %}
-            <tr id="card-{{ card.pk }}" data-name="{{ card.title }}">
+            <tr id="card-{{ card.pk }}" data-id="{{ card.pk }}" data-name="{{ card.title }}" class="card-row">
                 <td>{{ card.title }}</td>
                 <td>{{ card.count }}</td>
-                {% for field in card.fields %}
-                    {% if field.inherited %}
-                        <td style="color:#BBB;">Inherited</td>
-                    {% else %}
+
+                {% for name, value in card.dataset %}
+                <td>{{ value }}</td>
+                {% endfor %}
+
+                {% for field in card.editable_fields %}
+                    {% if field.value %}
                         <td>{{ field.value }}</td>
+                    {% else %}
+                        <td style="color:#BBB;">empty</td>
                     {% endif %}
                 {% endfor %}
-                <td></td>
             </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+<div class="modal fade" id="card-edit-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 {% endblock %}

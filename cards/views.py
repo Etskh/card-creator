@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views import View
 
-from .models import CardType, Field, CardTypeData
+from .models import CardType, Field, CardTypeData, Font
 
 
 def home(request):
@@ -83,12 +83,14 @@ class CardDataView(View):
             'success': True
         })
 
+
 class FieldView(View):
 
     def get(self, request, field_id):
         field = get_object_or_404(Field, pk=field_id)
         return render(request, 'partials/field-edit.html', {
             'field': field,
+            'fonts': Font.objects.all(),
         })
 
     def post(self, request, field_id):
@@ -110,6 +112,13 @@ class FieldView(View):
 
         if 'alignment' in request.POST:
             field.alignment = request.POST['alignment']
+
+        if 'font_id' in request.POST:
+            font = get_object_or_404(Font, pk=request.POST['font_id'])
+            field.font = font
+
+        if 'font_size' in request.POST:
+            field.font_size = request.POST['font_size']
 
         field.save()
 

@@ -15,7 +15,7 @@
     }
     {% for field in cardtype.field_set.all %}
     .cardtype-{{ cardtype.name }} .card .field-{{ field.name }} {
-      {{ field.css }}
+      {{ field.css|safe }}
     }
     {% endfor %}
 </style>
@@ -30,6 +30,7 @@
                 no fields
             {% endfor %}
             </div>
+            <div class="card-count">&times;{{ card.count }}</div>
         </div>
     {% empty %}
         <h1>You have no cards in this set</h1>

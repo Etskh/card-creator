@@ -6,24 +6,12 @@
 - make the ability card type
 - make the wealth card type
 
-## Market Research
-- find the "competitors"
-- start talks with printers
-- get it out to people
-  - Ben
-  - Mik
-  - Riley
 
 ## Startrek Chthulhu
 - make the profession card type
 - make the alien card type
 - make the character card type
 - make the item card type
-
-## Other Users
-
-
-
 
 
 ## Completed

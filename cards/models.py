@@ -75,7 +75,7 @@ class Font(models.Model):
     ))
 
     def css(self):
-        return '\'{}\', {};'.format(
+        return '\'{}\', {}'.format(
             self.name,
             self.type
         )

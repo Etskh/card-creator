@@ -40,6 +40,9 @@ class CardType(models.Model):
 
         return fields
 
+    def default_dataset(self):
+        return [(data.name, 0) for data in self.cardtypedata_set.all()]
+
     def margin(self):
         return CardType.REASONABLE_MARGIN
 

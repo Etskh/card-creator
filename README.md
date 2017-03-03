@@ -64,28 +64,10 @@
 - ✓ text-size changes font-size
 - ✓ changing text-side saves in model
 - changing fields in the text edit view popup
+- show existing fields on popup
+- on save, will save all card data
 - create a new card creates a new row in the table
-
-
-## MILESTONE 5
-### Code Health
-- ✓ add secret_key env to heroku account
-- ✓ add secret_key env to pycharm environment
-- ✓ add travis build key to heroku account
-- ✓ spruce up the page
-  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-  body { font-family: 'Oswald', sans-serif; }
-- cleanup: move Font model to its own app
-- cleanup: generalise the REST APIs in the views
-- cleanup: move the URLs to the cards module
-- improvement: write tests for model properties
-- cleanup: close the tickets that are open
-- improvement: use the PostgreSQL database
-- improvement: check data that is being saved on server wtih regexes too
-- if there's only one of them, use id not class
-- ✓ use Open Sans Condensed for site
-- ✓ use Oswald for the cards
-- can remove data type
+- make text size two buttons: once that increments by 10% and one that decreases by 10%
 
 
 ## MILESTONE 6
@@ -102,33 +84,14 @@
   {+} is the button to create a new project
 - new project page has text-box for project name and save!
 - `[ Project Name     -black-             {gear} ][ {list} {+} ]`
-  `{list} show a list of all projects that user owns
+  `{list}` show a list of all projects that user owns
 - if user has no projects, {list} doesn't show up
 - project list page has names of all projects to go to their page
 
 
-## MILESTONE 7
-### Art on Card
-- allow file uploads as hashed jpgs
-- as an extra piece of data for each card: have unique art
-- this can be uploaded from the card data entry area
-- there are checks for size to make sure it's not too big, or small
-- `{art}` puts the image in the field with pos:abs, w/h:100%
-
-
-## MILESTONE 8
-### Users
-- if not logged in, show log-in screen to log-in
-- upon login, go to project list
-- add button to bar at top for user page
-- `[ Project Name            {gear} ][ {list} {+} {user} ]`
-  where `{user}` will go to user settings
-- user settings has a name field for the user
-
-
 ## MILESTONE 9
 ### Symbols, Tags, and Advanced Patterns
-- can create symbols that have an image and a name
+- can create symbols at the project level that have an image and a name
 - can rename symbols
 - can delete symbols
 - create a symbol group which serves as a folder for symbols
@@ -145,6 +108,47 @@
 - tags can be put as labels on the card with `{tags}`
 
 
+## MILESTONE 7
+### Art on Card
+- allow file uploads as hashed jpgs
+- as an extra piece of data for each card: have unique art
+- this can be uploaded from the card data entry area
+- there are checks for size to make sure it's not too big, or small
+- `{art}` puts the image in the field with pos:abs, w/h:100%
+
+
+## MILESTONE 5
+### Code Health
+- ✓ add secret_key env to heroku account
+- ✓ add secret_key env to pycharm environment
+- ✓ add travis build key to heroku account
+- ✓ spruce up the page
+- cleanup: add minifier and cocatenator to the pipeline
+- port css to less
+- cleanup: generalise the REST APIs in the views
+- cleanup: move the URLs to the cards module
+- improvement: write tests for model properties
+- cleanup: close the tickets that are open
+- improvement: use the PostgreSQL database
+- improvement: check data that is being saved on server wtih regexes too
+- if there's only one of them, use id not class
+- ✓ use Open Sans Condensed for site
+- ✓ use Oswald for the cards
+- can remove data type
+- cleanup: move Font model to its own app
+
+
+## MILESTONE 8
+### Users
+- if not logged in, show log-in screen to log-in
+- upon login, go to project list
+- add button to bar at top for user page
+- `[ Project Name            {gear} ][ {list} {+} {user} ]`
+  where `{user}` will go to user settings
+- user settings has a name field for the user
+
+
+
 ## MILESTONE 10
 ### Maff n' Graff
 - if a field is overwritten, the user can assign a value
@@ -156,10 +160,3 @@
 - with the data and rules, we can compute a graph
 - to show all the cards in the project
 - we can go from one cardtype to the graph show the jedi curve
-
-
-## Bidness
-- look into digital printing solutions
-- upload of a CSV for the data in cards
-- validate session against all access and changes
-

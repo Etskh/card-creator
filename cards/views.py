@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views import View
 
-from .models import CardType, Field, CardTypeData, Font
+from .models import CardType, Field, CardTypeData, Font, Card
 
 
 def home(request):
@@ -46,6 +46,30 @@ def data(request, type_id):
         'total_card_count': total_card_count,
         'cards': card_type.card_set.all(),
     })
+
+
+class CardView(View):
+
+    @staticmethod
+    def create(request, type_id):
+        card_type = get_object_or_404(CardType, pk=type_id)
+
+        return render(request, 'partials/card-entry.html', {
+            'card_type': card_type,
+            'dataset': card_type.default_dataset(),
+        })
+
+    def get(self, request, card_id=None):
+        if not card_id:
+            return render(request, 'partials/card-entry.html', {
+                # empty
+            })
+
+        card = get_object_or_404(Card, pk=card_id)
+        return render(request, 'partials/card-entry.html', {
+            'card': card,
+            'dataset': card.dataset(),
+        })
 
 
 class CardTypeView(View):

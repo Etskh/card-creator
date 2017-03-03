@@ -232,10 +232,20 @@ var Field = {
 
 
 
-var Data = {
+var Card = {
+    create: function(cardType) {
+        console.log(cardType);
+        $.get('/type/'+ cardType +'/new-card', {}, function(response) {
+            $('#card-edit-modal .modal-title').text('New Card');
+            $('#card-edit-modal .modal-body').html(response);
+            $('#card-edit-modal').modal('show');
+        });
+    },
     open: function(id, callback) {
-        var html = '<h1>This is card '+ id +'!</h1>';
-        callback(html);
+        $.get('/card/' + id, {}, function(response) {
+            $('#card-edit-modal .modal-body').html(response);
+            $('#card-edit-modal').modal('show');
+        });
     }
 };
 
@@ -280,14 +290,16 @@ $(document).ready( function() {
     //
     // Card data editing
     //
+    $('#add-card').click(function() {
+        var cardType = $(this).data('card-type');
+        console.log(cardType);
+        Card.create(cardType);
+    });
     $('.card-row').click(function() {
         var target = this;
         var id = $(this).data('id');
         var name = $(this).data('name');
-        Data.open(id, function(html) {
-            $('#card-edit-modal .modal-title').text(name);
-            $('#card-edit-modal .modal-body').html(html);
-            $('#card-edit-modal').modal('show');
-        });
+        $('#card-edit-modal .modal-title').text(name);
+        Card.open(id);
     });
 });

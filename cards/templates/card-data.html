@@ -8,7 +8,7 @@
             <thead>
                 <tr>
                     <td colspan="2">
-                        <button class="btn btn-success" id="add-card">+ Add card</button>
+                        <button class="btn btn-success" id="add-card" data-card-type="{{ cardtype.pk }}">+ Add card</button>
                     </td>
                     <td colspan="{{ cardtype.cardtypedata_set.all|length }}">Data</td>
                     <td colspan="{{ cardtype.field_set.all|length }}">Fields</td>

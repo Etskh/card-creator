@@ -1,0 +1,23 @@
+<div class="card-{{ card.title }} container-fluid" id="card-{{ card.pk }}">
+
+    <div class="col-sm-6">
+        <input type="text" value="{{ card.title }}" placeholder="Title" style="font-size:150%;color:#000"/>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="card-count-label">Count</span>
+            <input type="number" placeholder="Count" aria-describedby="card-count-label" id="card-count" value="{{ card.count }}" data-id="{{ field.pk }}" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <h3>Card Data</h3>
+        {% for name, value in dataset %}
+        <div class="input-group">
+            <span class="input-group-addon" style="width:128px;" id="data-{{ name }}-label">{{ name }}</span>
+            <input type="number" placeholder="Count" aria-describedby="card-count-label" id="data-{{ name }}" value="{{ value }}" data-name="{{ name }}" class="form-control"/>
+        </div>
+        {% endfor %}
+    </div>
+</div>

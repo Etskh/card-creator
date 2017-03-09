@@ -1,0 +1,16 @@
+<tr id="card-{{ card.pk }}" data-id="{{ card.pk }}" data-name="{{ card.title }}" class="card-row">
+    <td class="title">{{ card.title }}</td>
+    <td class="count">{{ card.count }}</td>
+
+    {% for name, value in card.dataset %}
+    <td class="data-{{ name }}">{{ value }}</td>
+    {% endfor %}
+
+    {% for field in card.editable_fields %}
+        {% if field.value %}
+            <td>{{ field.value }}</td>
+        {% else %}
+            <td style="color:#BBB;">empty</td>
+        {% endif %}
+    {% endfor %}
+</tr>

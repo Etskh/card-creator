@@ -92,6 +92,7 @@ nav.card-nav .navbar-nav>.active>a:focus {
 .card-list .card {
     float: left;
     margin-right: 64px;
+    margin-bottom: 48px;
 }
 .card {
     position:relative;

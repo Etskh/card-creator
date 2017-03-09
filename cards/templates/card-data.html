@@ -25,22 +25,7 @@
             </thead>
             <tbody>
             {% for card in cards %}
-            <tr id="card-{{ card.pk }}" data-id="{{ card.pk }}" data-name="{{ card.title }}" class="card-row">
-                <td class="title">{{ card.title }}</td>
-                <td class="count">{{ card.count }}</td>
-
-                {% for name, value in card.dataset %}
-                <td class="data-{{ name }}">{{ value }}</td>
-                {% endfor %}
-
-                {% for field in card.editable_fields %}
-                    {% if field.value %}
-                        <td>{{ field.value }}</td>
-                    {% else %}
-                        <td style="color:#BBB;">empty</td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
+                {% include 'partials/card-row.html' %}
             {% endfor %}
             </tbody>
         </table>
@@ -78,7 +63,7 @@
         </div>
 
         <div class="col-sm-6">
-            <input type="text" data-cardTypeId="{{ cardtype.pk }}" id="new-card-name" placeholder="Title" style="font-size:150%;color:#000"/>
+            <input type="text" data-cardtypeid="{{ cardtype.pk }}" id="new-card-name" placeholder="Title" style="font-size:150%;color:#000"/>
         </div>
       </div>
       <div class="modal-footer">

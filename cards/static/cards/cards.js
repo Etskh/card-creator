@@ -239,14 +239,9 @@ var Field = {
 
 var Card = {
     create: function(cardType, name, callback) {
-        /*$.get('/type/'+ cardType +'/new-card', {}, function(response) {
-            $('#card-edit-modal .modal-title').text('New Card');
-            $('#card-edit-modal .modal-body').html(response);
-            $('#card-edit-modal').modal('show');
-        });*/
-    },
-    createNew: function() {
-        console.log()
+        $.post('/type/'+ cardType +'/new-card', {title: name}, function(response) {
+            callback(response);
+        });
     },
     open: function(id, callback) {
         $.get('/card/' + id, {}, function(response) {
@@ -308,7 +303,8 @@ var Card = {
         });
         $('button#card-new').click(function() {
             var $name = $('#new-card-name');
-            Card.create( $name.data('cardTypeId'), $name.val(), function() {
+            Card.create( $name.data('cardtypeid'), $name.val(), function(row) {
+                $('.card-list tbody').append(row);
                 $('#card-new-modal').modal('hide');
             });
         });

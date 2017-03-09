@@ -54,9 +54,15 @@ class CardView(View):
     def create(request, type_id):
         card_type = get_object_or_404(CardType, pk=type_id)
 
-        return render(request, 'partials/card-entry.html', {
+        card = Card.objects.create(
+            card_type=card_type,
+            title=request.POST['title'],
+        )
+
+        return render(request, 'partials/card-row.html', {
             'card_type': card_type,
             'dataset': card_type.default_dataset(),
+            'card': card
         })
 
     def get(self, request, card_id=None):

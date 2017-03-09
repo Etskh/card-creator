@@ -85,6 +85,12 @@ class CardView(View):
         for name, value in card.dataset():
             card.set_data(name, request.POST['data[' + name + ']'])
 
+        for field in card.fields:
+            try:
+                card.set_field(field.name, request.POST['fields[' + field.name + ']'])
+            except KeyError:
+                pass
+
         card.save()
 
         return JsonResponse({

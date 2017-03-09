@@ -269,21 +269,31 @@ var Card = {
         var $cardData = $('.card-data-value');
         var data = {};
         for( var d=0; d<$cardData.length; d++) {
-            console.log($cardData[d]);
             data[$cardData[d].dataset.name] = $cardData[d].value;
+        }
+        var $cardFields = $('.card-field-value');
+        var fields = {};
+        for( var d=0; d<$cardFields.length; d++) {
+            fields[$cardFields[d].dataset.name] = $cardFields[d].value;
         }
 
         Card.save(id, {
             title: name,
             count: count,
             data: data,
+            fields: fields,
         }, function() {
             // update the row
             var $row = $('#card-'+id);
             $row.find('td.title').text(name);
             $row.find('td.count').text(count);
+            // Set the data
             for( var name in data ) {
                 $row.find('td.data-'+name).text(data[name]);
+            }
+            // Set the fields
+            for( var name in fields ) {
+                $row.find('td.field-'+name).text(fields[name]);
             }
             // close the modal
             $('#card-edit-modal').modal('hide');

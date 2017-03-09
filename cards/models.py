@@ -1,5 +1,6 @@
 import json
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.admin import User
 
@@ -159,6 +160,21 @@ class Card(models.Model):
 
     def dataset(self):
         return [(data.name, self.data_value(data.name)) for data in self.card_type.cardtypedata_set.all()]
+
+    def set_field(self, name, value):
+        field = Field.objects.get(name=name)
+        try:
+            field_data = self.fielddata_set.get(field=field)
+            field_data.value = value
+            field_data.save()
+        except ObjectDoesNotExist:
+            #
+            # No existing data? Make a new one
+            FieldData.objects.create(
+                card=self,
+                value=value,
+                field=field,
+            )
 
     @property
     def patterns(self):

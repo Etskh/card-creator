@@ -23,7 +23,17 @@
         {% for name, value in dataset %}
         <div class="input-group">
             <span class="input-group-addon" style="width:128px;" id="data-{{ name }}-label">{{ name }}</span>
-            <input type="number" placeholder="Count" aria-describedby="card-count-label" id="data-{{ name }}" value="{{ value }}" data-name="{{ name }}" class="form-control card-data-value"/>
+            <input type="number" placeholder="Count" aria-describedby="data-{{ name }}-label" value="{{ value }}" data-name="{{ name }}" class="form-control card-data-value"/>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-sm-12">
+        <h3>Fields</h3>
+        {% for field in card.editable_fields %}
+        <div class="input-group">
+            <span class="input-group-addon" style="width:128px;" id="field-entry-{{ field.name }}-label">{{ field.name }}</span>
+            <input type="text" aria-describedby="field-entry-{{ field.name }}-label" value="{% if field.value %}{{ field.value }}{% endif %}" data-name="{{ field.name }}" class="form-control card-field-value"/>
         </div>
         {% endfor %}
     </div>

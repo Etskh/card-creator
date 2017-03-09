@@ -7,10 +7,6 @@
     {% endfor %}
 
     {% for field in card.editable_fields %}
-        {% if field.value %}
-            <td>{{ field.value }}</td>
-        {% else %}
-            <td style="color:#BBB;">empty</td>
-        {% endif %}
+        <td class="field-{{ field.name }}">{% if field.value %}{{ field.value }}{% endif %}</td>
     {% endfor %}
 </tr>

@@ -66,7 +66,8 @@
 - ✓ changing fields in the text edit view popup
 - ✓ on save, will save all card data
 - ✓ create a new card creates a new row in the table
-- show existing fields on popup
+- ✓ show existing fields on popup
+- ✓ save modified fields
 - make text size two buttons: once that increments by 10% and one that decreases by 10%
 
 
@@ -87,6 +88,7 @@
   `{list}` show a list of all projects that user owns
 - if user has no projects, {list} doesn't show up
 - project list page has names of all projects to go to their page
+- pressing enter with modal will attempt to save it
 
 
 ## MILESTONE 9

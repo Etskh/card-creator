@@ -1,0 +1,25 @@
+<div class="modal fade" id="card-new-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">New Card</h4>
+      </div>
+      <div class="modal-body">
+      <div class="container-fluid">
+        <div class="alert alert-danger" id="new-carddata-alert" style="display:none" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="text">...</span>
+        </div>
+
+        <div class="col-sm-6">
+            <input type="text" data-cardtypeid="{{ cardtype.pk }}" id="new-card-name" placeholder="Title" style="font-size:150%;color:#000"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" disabled="true" id="card-new">Create New</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

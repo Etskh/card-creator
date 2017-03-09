@@ -63,9 +63,9 @@
 - ✓ add text-size number to field
 - ✓ text-size changes font-size
 - ✓ changing text-side saves in model
-- changing fields in the text edit view popup
+- ✓ changing fields in the text edit view popup
 - show existing fields on popup
-- on save, will save all card data
+- ✓ on save, will save all card data
 - create a new card creates a new row in the table
 - make text size two buttons: once that increments by 10% and one that decreases by 10%
 

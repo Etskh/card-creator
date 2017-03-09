@@ -71,6 +71,20 @@ class CardView(View):
             'dataset': card.dataset(),
         })
 
+    def post(self, request, card_id):
+        card = get_object_or_404(Card, pk=card_id)
+        card.title = request.POST['title']
+        card.count = request.POST['count']
+
+        for name, value in card.dataset():
+            card.set_data(name, request.POST['data[' + name + ']'])
+
+        card.save()
+
+        return JsonResponse({
+            'success': True
+        })
+
 
 class CardTypeView(View):
 

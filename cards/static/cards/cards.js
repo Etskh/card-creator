@@ -17,6 +17,9 @@ var createInputTimer = function( options ) {
                 if( !value.match(options.regex) ) {
                     $alert.find('.text').text(options.errorMessage);
                     $alert.show('blind');
+                    if( options.error ) {
+                        options.error();
+                    }
                     return;
                 }
                 else {
@@ -24,7 +27,9 @@ var createInputTimer = function( options ) {
                 }
             }
 
-            options.success(value, $(target));
+            if( options.success ) {
+                options.success(value, $(target));
+            }
             $(target).addClass('success');
             setTimeout(function(){
                 $(target).addClass('success');
@@ -233,20 +238,101 @@ var Field = {
 
 
 var Card = {
-    create: function(cardType) {
-        console.log(cardType);
-        $.get('/type/'+ cardType +'/new-card', {}, function(response) {
+    create: function(cardType, name, callback) {
+        /*$.get('/type/'+ cardType +'/new-card', {}, function(response) {
             $('#card-edit-modal .modal-title').text('New Card');
             $('#card-edit-modal .modal-body').html(response);
             $('#card-edit-modal').modal('show');
-        });
+        });*/
+    },
+    createNew: function() {
+        console.log()
     },
     open: function(id, callback) {
         $.get('/card/' + id, {}, function(response) {
             $('#card-edit-modal .modal-body').html(response);
+            createInputTimer({
+                $elem: $('#card-name'),
+                regex: /^[a-zA-Z\- ]+$/,
+                $errorElem: $('#carddata-alert'),
+                errorMessage: 'Name can only contain letters, dashes, and spaces',
+            });
+            createInputTimer({
+                $elem: $('#card-count'),
+                regex: /^[0-9]+$/,
+                $errorElem: $('#carddata-alert'),
+                errorMessage: 'Card count needs to be a number',
+            });
             $('#card-edit-modal').modal('show');
         });
-    }
+    },
+    saveOpen: function() {
+        var id = $('#card-id').val();
+        var name = $('#card-name').val();
+        var count = $('#card-count').val();
+
+        var $cardData = $('.card-data-value');
+        var data = {};
+        for( var d=0; d<$cardData.length; d++) {
+            console.log($cardData[d]);
+            data[$cardData[d].dataset.name] = $cardData[d].value;
+        }
+
+        Card.save(id, {
+            title: name,
+            count: count,
+            data: data,
+        }, function() {
+            // update the row
+            var $row = $('#card-'+id);
+            $row.find('td.title').text(name);
+            $row.find('td.count').text(count);
+            for( var name in data ) {
+                $row.find('td.data-'+name).text(data[name]);
+            }
+            // close the modal
+            $('#card-edit-modal').modal('hide');
+        });
+    },
+    save: function(id, data, callback) {
+        console.log(data);
+        $.post('/card/' + id, data, function(response){
+            if( callback ) {
+                callback();
+            }
+        });
+    },
+    init: function() {
+        $('#add-card').click(function(){
+            $('#card-new-modal').modal('show');
+        });
+        $('button#card-new').click(function() {
+            var $name = $('#new-card-name');
+            Card.create( $name.data('cardTypeId'), $name.val(), function() {
+                $('#card-new-modal').modal('hide');
+            });
+        });
+        createInputTimer({
+            $elem: $('#new-card-name'),
+            regex: /^[a-zA-Z\- ]+$/,
+            $errorElem: $('#new-carddata-alert'),
+            errorMessage: 'Name can only contain letters, dashes, and spaces',
+            success: function(){
+                $('button#card-new').prop('disabled', false);
+            },
+            error: function() {
+                $('button#card-new').prop('disabled', true);
+            },
+        });
+        $('.card-row').click(function() {
+            var target = this;
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            $('#card-edit-modal .modal-title').text(name);
+            Card.open(id);
+        });
+        $('#card-save').click(Card.saveOpen);
+    },
 };
 
 
@@ -286,20 +372,7 @@ $(document).ready( function() {
     });
 
 
-
-    //
     // Card data editing
     //
-    $('#add-card').click(function() {
-        var cardType = $(this).data('card-type');
-        console.log(cardType);
-        Card.create(cardType);
-    });
-    $('.card-row').click(function() {
-        var target = this;
-        var id = $(this).data('id');
-        var name = $(this).data('name');
-        $('#card-edit-modal .modal-title').text(name);
-        Card.open(id);
-    });
+    Card.init();
 });

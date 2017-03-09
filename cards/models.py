@@ -140,6 +140,11 @@ class Card(models.Model):
     def __str__(self):
         return self.title
 
+    def set_data(self, name, value):
+        values = json.loads(self.data)
+        values[name] = value
+        self.data = json.dumps(values)
+
     def data_value(self, name):
         values = json.loads(self.data)
 

@@ -10,8 +10,8 @@
                     <td colspan="2">
                         <button class="btn btn-success" id="add-card" data-card-type="{{ cardtype.pk }}">+ Add card</button>
                     </td>
-                    <td colspan="{{ cardtype.cardtypedata_set.all|length }}">Data</td>
-                    <td colspan="{{ cardtype.field_set.all|length }}">Fields</td>
+                    <td colspan="{{ cardtype.cardtypedata_set.all|length }}"></td>
+                    <td colspan="{{ cardtype.field_set.all|length }}"></td>
                 <tr>
                     <td>Title</td>
                     <td>Count</td>
@@ -26,11 +26,11 @@
             <tbody>
             {% for card in cards %}
             <tr id="card-{{ card.pk }}" data-id="{{ card.pk }}" data-name="{{ card.title }}" class="card-row">
-                <td>{{ card.title }}</td>
-                <td>{{ card.count }}</td>
+                <td class="title">{{ card.title }}</td>
+                <td class="count">{{ card.count }}</td>
 
                 {% for name, value in card.dataset %}
-                <td>{{ value }}</td>
+                <td class="data-{{ name }}">{{ value }}</td>
                 {% endfor %}
 
                 {% for field in card.editable_fields %}
@@ -54,11 +54,36 @@
         <h4 class="modal-title">Modal title</h4>
       </div>
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+        <p>&hellip;</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="card-save">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="modal fade" id="card-new-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">New Card</h4>
+      </div>
+      <div class="modal-body">
+      <div class="container-fluid">
+        <div class="alert alert-danger" id="new-carddata-alert" style="display:none" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="text">...</span>
+        </div>
+
+        <div class="col-sm-6">
+            <input type="text" data-cardTypeId="{{ cardtype.pk }}" id="new-card-name" placeholder="Title" style="font-size:150%;color:#000"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" disabled="true" id="card-new">Create New</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

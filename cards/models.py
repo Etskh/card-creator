@@ -14,6 +14,29 @@ class Project(models.Model):
     create_date = models.DateTimeField('date created', auto_now_add=True, blank=True)
     owner = models.ForeignKey(User, null=True, blank=True, related_name='projects', on_delete=models.CASCADE)
 
+    @staticmethod
+    def to_slug(string):
+        return string.replace(' ', '-').lower()
+
+    @property
+    def slug(self):
+        return Project.to_slug(self.name)
+
+    @staticmethod
+    def get_by_slug(project_slug):
+        projects = [p for p in Project.objects.all() if p.slug == project_slug]
+
+        if len(projects) != 1:
+            raise ValueError(
+                '{} projects matched the slug `{}` and this is '
+                'a problem, but I haven\'t gotten around to coding '
+                'a graceful way to handle it.'.format(
+                    len(projects),
+                    project_slug,
+                ))
+
+        return projects[0]
+
     def __str__(self):
         return self.name
 

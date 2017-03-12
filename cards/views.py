@@ -2,50 +2,60 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views import View
 
-from .models import CardType, Field, CardTypeData, Font, Card
+from .models import Project, CardType, Field, CardTypeData, Font, Card
 
 
 def home(request):
     card_types = CardType.objects.all()
+    # Grab whatever card type and take the project from that
+    # FIXME: security matters, kids. Just not yet
+    project = card_types[0].project
     return render(request, 'core/default.html', {
+        'project': project,
         'view_name': 'home',
         'card_types': card_types,
     })
 
 
-def view(request, type_id):
-    card_type = get_object_or_404(CardType, pk=type_id)
-    card_types = CardType.objects.all()
-    return render(request, 'card-list.html', {
-        'view_name': 'view',
-        'card_types': card_types,
-        'cardtype': card_type,
-        'cards': card_type.card_set.all(),
+def project_home(request, project_slug):
+
+    project = Project.get_by_slug(project_slug)
+
+    return render(request, 'core/default.html', {
+        'project': project,
+        'view_name': 'home',
+        'card_types': project.cardtype_set.all(),
     })
 
 
-def layout(request, type_id):
-    card_type = get_object_or_404(CardType, pk=type_id)
-    card_types = CardType.objects.all()
-    return render(request, 'card-layout.html', {
-        'view_name': 'layout',
-        'card_types': card_types,
-        'cardtype': card_type
-    })
+# TODO: Move this to its own module
+
+class TemplateCardTypeView:
+    @staticmethod
+    def render(request, project_slug, card_type_slug, view_name):
+        templates = {
+            'view': 'card-list.html',
+            'layout': 'card-layout.html',
+            'data': 'card-data.html',
+        }
+        project = Project.get_by_slug(project_slug)
+
+        # TODO: sanity check for card_type belonging to project
+        card_type = CardType.objects.get(name=card_type_slug)
+        cards = card_type.card_set.all()
+
+        return render(request, templates[view_name], {
+            'project': project,
+            'card_type': card_type,
+            'view_name': view_name,
+            'card_types': project.cardtype_set.all(),
+            'cards': card_type.card_set.all(),
+            'total_card_count': sum([card.count for card in cards]),
+        })
 
 
-def data(request, type_id):
-    card_type = get_object_or_404(CardType, pk=type_id)
-    card_types = CardType.objects.all()
-    cards = card_type.card_set.all()
-    total_card_count = sum([card.count for card in cards])
-    return render(request, 'card-data.html', {
-        'view_name': 'data',
-        'card_types': card_types,
-        'cardtype': card_type,
-        'total_card_count': total_card_count,
-        'cards': card_type.card_set.all(),
-    })
+
+
 
 
 class CardView(View):

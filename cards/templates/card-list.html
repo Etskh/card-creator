@@ -3,23 +3,23 @@
 {% block content %}
 <!-- CardList View -->
 <style>
-    .cardtype-{{ cardtype.name }} .card {
-      width: {{ cardtype.width }}in;
-      height: {{ cardtype.height }}in;
+    .cardtype-{{ card_type.name }} .card {
+      width: {{ card_type.width }}in;
+      height: {{ card_type.height }}in;
     }
     .inner-card {
         position:relative;
-        margin: {{ cardtype.margin }}in;
-        width: {{ cardtype.inner_width }}in;
-        height: {{ cardtype.inner_height }}in;
+        margin: {{ card_type.margin }}in;
+        width: {{ card_type.inner_width }}in;
+        height: {{ card_type.inner_height }}in;
     }
-    {% for field in cardtype.field_set.all %}
-    .cardtype-{{ cardtype.name }} .card .field-{{ field.name }} {
+    {% for field in card_type.field_set.all %}
+    .cardtype-{{ card_type.name }} .card .field-{{ field.name }} {
       {{ field.css|safe }}
     }
     {% endfor %}
 </style>
-<div class="card-list cardtype-{{ cardtype.name }}">
+<div class="card-list cardtype-{{ card_type.name }}">
     {% for card in cards %}
         <!-- Card View -->
         <div class="card" id="card-{{ card.pk }}" data-name="{{ card.title }}">

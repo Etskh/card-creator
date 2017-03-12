@@ -47,10 +47,7 @@
 - ✓ can view data types
 - ✓ can rename data type
 - ✓ fields can reference data in the cards with `{#data-name}`
-
-
-## MILESTONE 4
-### Advanced Card Editing:
+### Milestone 4: Advanced Card Editing:
 - ✓ remove style from model
 - ✓ add italic boolean to field
 - ✓ add bold boolean to field

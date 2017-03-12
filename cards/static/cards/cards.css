@@ -64,6 +64,15 @@ nav.card-nav .navbar-nav>.active>a:focus {
     text-shadow: #000 0px 0px 4px;
     color: #FFF;
 }
+nav.project-nav {
+    background: rgb(22,22,22);
+    border:none;
+    text-shadow: #000 0px 0px 4px;
+}
+nav.project-nav .navbar-brand {
+    color:#FFF;
+    font-weight: bold;
+}
 
 
 .controls {

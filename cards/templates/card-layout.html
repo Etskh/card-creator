@@ -3,16 +3,16 @@
 {% block content %}
 <!-- CardList View -->
 <style>
-    .cardtype-{{ cardtype.name }} .card {
-        width: {{ cardtype.width }}in;
-        height: {{ cardtype.height }}in;
+    .cardtype-{{ card_type.name }} .card {
+        width: {{ card_type.width }}in;
+        height: {{ card_type.height }}in;
         position:relative;
     }
     .inner-card {
         position:relative;
-        margin: {{ cardtype.margin }}in;
-        width: {{ cardtype.inner_width }}in;
-        height: {{ cardtype.inner_height }}in;
+        margin: {{ card_type.margin }}in;
+        width: {{ card_type.inner_width }}in;
+        height: {{ card_type.inner_height }}in;
     }
 </style>
 <div class="controls controls-left">
@@ -26,7 +26,7 @@
     <div class="row">
         <div class="input-group">
             <span class="input-group-addon" id="cardtype-name-label">Name</span>
-            <input type="text" placeholder="Name" aria-describedby="cardtype-name-label" class="cardtype-name form-control" data-id="{{ cardtype.pk }}" value="{{ cardtype.name }}"/>
+            <input type="text" placeholder="Name" aria-describedby="cardtype-name-label" class="cardtype-name form-control" data-id="{{ card_type.pk }}" value="{{ card_type.name }}"/>
             <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
         </div>
     </div>
@@ -38,7 +38,7 @@
         <button class="btn btn-success" id="add-data">+ Add data type</button>
     </div>
     <div class="row" id="data-list">
-        {% for data in cardtype.cardtypedata_set.all %}
+        {% for data in card_type.cardtypedata_set.all %}
             {% include 'partials/data-edit.html' %}
         {% endfor %}
     </div>
@@ -46,7 +46,7 @@
 <div class="card-edit-list cardtype-{{ cardtype.name }}">
     <div class="card">
         <div class="inner-card">
-        {% for field in cardtype.field_set.all %}
+        {% for field in card_type.field_set.all %}
             {% include 'partials/field-span.html' %}
         {% endfor %}
         </div>

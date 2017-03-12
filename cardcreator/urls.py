@@ -23,9 +23,23 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # Main views
     url(r'^$', cardviews.home),
-    url(r'^type/(?P<type_id>[0-9]+)$', cardviews.view),
-    url(r'^type/(?P<type_id>[0-9]+)/layout$', cardviews.layout),
-    url(r'^type/(?P<type_id>[0-9]+)/data$', cardviews.data),
+    # project home
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)$', cardviews.project_home),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)$',
+        cardviews.TemplateCardTypeView.render, {
+            'view_name': 'view'
+        }),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/layout$',
+        cardviews.TemplateCardTypeView.render, {
+            'view_name': 'layout'
+        }),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/data$',
+        cardviews.TemplateCardTypeView.render, {
+            'view_name': 'data'
+        }),
+
+
+    # RESTful interface
     url(r'^type/(?P<type_id>[0-9]+)/new-card$', CardView.create),
     # Card
     url(r'^card$', CardView.as_view()),

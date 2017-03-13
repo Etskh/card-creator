@@ -28,6 +28,16 @@ def project_home(request, project_slug):
     })
 
 
+def project_settings(request, project_slug):
+
+    project = Project.get_by_slug(project_slug)
+
+    return render(request, 'project-settings.html', {
+        'project': project,
+        'card_types': project.cardtype_set.all(),
+    })
+
+
 # TODO: Move this to its own module
 
 class TemplateCardTypeView:

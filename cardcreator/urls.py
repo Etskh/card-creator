@@ -27,6 +27,7 @@ urlpatterns = [
 
     # project home
     url(r'^(?P<project_slug>[a-zA-Z\-]+)$', cardviews.project_home),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/settings$', cardviews.project_settings),
 
     # Card Type
     url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)$',

@@ -21,10 +21,14 @@ from cards.views import FieldView, CardTypeView, CardDataView, CardView
 urlpatterns = [
     # Admin pages
     url(r'^admin/', admin.site.urls),
+
     # Main views
     url(r'^$', cardviews.home),
+
     # project home
     url(r'^(?P<project_slug>[a-zA-Z\-]+)$', cardviews.project_home),
+
+    # Card Type
     url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)$',
         cardviews.TemplateCardTypeView.render, {
             'view_name': 'view'
@@ -37,7 +41,6 @@ urlpatterns = [
         cardviews.TemplateCardTypeView.render, {
             'view_name': 'data'
         }),
-
 
     # RESTful interface
     url(r'^type/(?P<type_id>[0-9]+)/new-card$', CardView.create),

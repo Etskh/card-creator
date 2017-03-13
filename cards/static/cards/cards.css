@@ -40,8 +40,16 @@ TD.field-header {
 }
 
 nav.navbar-default {
+    color:#FFF;
     margin:0px;
 }
+nav.navbar-default a {
+    color:#FFF !important;
+}
+nav.navbar-default a:hover {
+    color:#FFF !important;
+}
+
 nav.cardtypes-nav {
     background: #444;
     border: none;

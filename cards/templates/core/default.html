@@ -24,13 +24,18 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <nav class="navbar navbar-default project-nav">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <ul class="nav navbar-nav">
-                  <a class="navbar-brand" href="/{{ project.slug }}">{{ project.name }}</a>
-              </ul>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                  <ul class="nav navbar-nav">
+                      <a class="navbar-brand" href="/{{ project.slug }}">{{ project.name }}</a>
+                  </ul>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    </a></li>
+                </ul>
             </div>
-          </div>
         </nav>
         <nav class="navbar navbar-default cardtypes-nav">
           <div class="container-fluid">

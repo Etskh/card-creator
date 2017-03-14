@@ -1,0 +1,31 @@
+<nav class="navbar navbar-default card-nav">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <li class="{% if view_name == 'view' %}active{% endif %}">
+                    <a href="/{{ project.slug }}/{{ card_type.name }}">
+                        <i class="fa fa-clone" aria-hidden="true"></i> view
+                    </a>
+                </li>
+                <li class="{% if view_name == 'layout' %}active{% endif %}">
+                    <a href="/{{ project.slug }}/{{ card_type.name }}/layout">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> edit
+                    </a>
+                </li>
+
+                <li class="{% if view_name == 'data' %}active{% endif %}">
+                    <a href="/{{ project.slug }}/{{ card_type.name }}/data">
+                        <i class="fa fa-table" aria-hidden="true"></i> data
+                    </a>
+                </li>
+                <!--
+                <li class="{% if view_name == 'graph' %}active{% endif %}">
+                    <a href="/{{ project.slug }}/{{ card_type.name }}/graph">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i> graph
+                    </a>
+                </li>
+                -->
+            </ul>
+        </div>
+    </div>
+</nav>

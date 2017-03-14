@@ -1,0 +1,19 @@
+<nav class="navbar navbar-default project-nav">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                <a class="navbar-brand" href="/{{ project.slug }}">{{ project.name }}</a>
+            </ul>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/{{ project.slug }}/settings">
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="nav navbar-text navbar-right">
+            v{{ version }}
+        </div>
+    </div>
+</nav>

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 
 from .models import Project, CardType, Field, CardTypeData, Font, Card
-
+from .apps import CardsConfig
 
 def home(request):
     card_types = CardType.objects.all()
@@ -21,7 +21,7 @@ def project_home(request, project_slug):
 
     project = Project.get_by_slug(project_slug)
 
-    return render(request, 'core/default.html', {
+    return render(request, 'project-settings.html', {
         'project': project,
         'view_name': 'home',
         'card_types': project.cardtype_set.all(),
@@ -39,6 +39,65 @@ def project_settings(request, project_slug):
 
 
 # TODO: Move this to its own module
+
+class TemplateView:
+
+    @staticmethod
+    def project(request, project_slug):
+        view = TemplateView(request, 'project')
+        view.add_project(project_slug)
+        return view.render()
+
+    @staticmethod
+    def card_type(request, project_slug, card_type_slug, view_name):
+        view = TemplateView(request, view_name)
+        view.add_project(project_slug)
+        view.add_card_type(card_type_slug)
+        # TODO: Sanity check that card_type's owner is project
+        return view.render()
+
+    @staticmethod
+    def ajax_card_popup(request, card_id, view_name):
+        view = TemplateView(request, view_name)
+        card = get_object_or_404(Card, pk=card_id)
+        view.context['card'] = card
+        view.context['dataset'] = card.dataset()
+        return view.render()
+
+    def __init__(self, request, view_name):
+        templates = {
+            'project': 'project-settings.html',
+            'view': 'card-list.html',
+            'layout': 'card-layout.html',
+            'data': 'card-data.html',
+            # These are called via AJAX only
+            'ajax-card-popup': 'partials/card-entry.html',
+        }
+        # TODO: Make sure if the view-name is 'ajax-*' then request is AJAX
+
+        self.request = request
+        self.view_name = view_name
+        self.template = templates[view_name]
+        self.context = {
+            'view_name': self.view_name,
+            'version': CardsConfig.version_full,
+        }
+
+    def add_project(self, project_slug):
+        project = Project.get_by_slug(project_slug)
+        self.context['project'] = project
+        self.context['card_types'] = project.cardtype_set.all()
+
+    def add_card_type(self, card_type_slug):
+        card_type = CardType.objects.get(name=card_type_slug)
+        cards = card_type.card_set.all()
+        self.context['card_type'] = card_type
+        self.context['cards'] = card_type.card_set.all()
+        self.context['total_card_count'] = sum([card.count for card in cards])
+
+    def render(self):
+        return render(self.request, self.template, self.context)
+
 
 class TemplateCardTypeView:
     @staticmethod

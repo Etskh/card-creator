@@ -26,24 +26,19 @@ urlpatterns = [
     url(r'^$', cardviews.home),
 
     # project home
-    url(r'^(?P<project_slug>[a-zA-Z\-]+)$', cardviews.project_home),
-    url(r'^(?P<project_slug>[a-zA-Z\-]+)/settings$', cardviews.project_settings),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)$', cardviews.TemplateView.project),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/settings$', cardviews.TemplateView.project),
 
     # Card Type
     url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)$',
-        cardviews.TemplateCardTypeView.render, {
-            'view_name': 'view'
-        }),
+        cardviews.TemplateView.card_type, {'view_name': 'view'}),
     url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/layout$',
-        cardviews.TemplateCardTypeView.render, {
-            'view_name': 'layout'
-        }),
+        cardviews.TemplateView.card_type, {'view_name': 'layout'}),
     url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/data$',
-        cardviews.TemplateCardTypeView.render, {
-            'view_name': 'data'
-        }),
+        cardviews.TemplateView.card_type, {'view_name': 'data'}),
 
     # RESTful interface
+    # TODO: move this away
     url(r'^type/(?P<type_id>[0-9]+)/new-card$', CardView.create),
     # Card
     url(r'^card$', CardView.as_view()),

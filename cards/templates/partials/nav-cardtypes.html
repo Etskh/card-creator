@@ -1,0 +1,16 @@
+<nav class="navbar navbar-default cardtypes-nav">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav">
+                {% for type in card_types %}
+                <li class="{% if type.name == card_type.name %}active{% endif %}">
+                    <a href="/{{ project.slug }}/{{ type.name }}">{{ type.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="navbar-form navbar-left">
+                <button class="btn btn-default" id="add-card-type"><i class="fa fa-plus" aria-hidden="true"></i> New card type</button>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -10,6 +10,7 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://bootswatch.com/cyborg/bootstrap.min.css"/>
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet"/>
@@ -20,50 +21,29 @@
         <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700|Oswald:300" rel="stylesheet">
     </head>
     <body>
+
+
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <nav class="navbar navbar-default project-nav">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                  <ul class="nav navbar-nav">
-                      <a class="navbar-brand" href="/{{ project.slug }}">{{ project.name }}</a>
-                  </ul>
-                </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/{{ project.slug }}/settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a></li>
-                </ul>
-            </div>
-        </nav>
-        <nav class="navbar navbar-default cardtypes-nav">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <ul class="nav navbar-nav">
-                {% for type in card_types %}
-                  <li class="{% if type.name == card_type.name %}active{% endif %}"><a href="/{{ project.slug }}/{{ type.name }}">{{ type.name }}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-        </nav>
+
+
+        {% include 'partials/nav-project.html' %}
+        {% include 'partials/nav-cardtypes.html' %}
         {% if card_type %}
-        <nav class="navbar navbar-default card-nav">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <ul class="nav navbar-nav">
-                <li class="{% if view_name == "view" %}active{% endif %}"><a href="/{{ project.slug }}/{{ card_type.name }}">view</a></li>
-                <li class="{% if view_name == "layout" %}active{% endif %}"><a href="/{{ project.slug }}/{{ card_type.name }}/layout">layout</a></li>
-                <li class="{% if view_name == "data" %}active{% endif %}"><a href="/{{ project.slug }}/{{ card_type.name }}/data">data</a></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+            {% include 'partials/nav-cards.html' %}
         {% endif %}
+
+
+
+
         <div id="content" class="container-fluid">
             {% block content %}{% endblock %}
         </div>
+
+        {% include 'partials/modal-new-cardtype.html' %}
+
+
         <div id="scripts">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

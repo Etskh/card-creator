@@ -67,28 +67,18 @@
 - ✓ save modified fields
 
 
-## MILESTONE 6
+## MILESTONE 5
 ### Project
-- `[                  -black-                    ]`
+- ✓ `[                  -black-                    ]`
   bar at top of screen to show current project
-- `[ Project Name     -black-                    ]`
+- ✓ `[ Project Name     -black-                    ]`
   Project name is the name of the active project
-- `[ Project Name     -black-             {gear} ]`
+- ✓ `[ Project Name     -black-             {gear} ]`
   where `{gear}` is the project settings page!
-- project settings page has editable name
-- project settings page has delete option
-- `[ Project Name     -black-             {gear} ][ {+} ]` <- dk. green
-  {+} is the button to create a new project
-- new project page has text-box for project name and save!
-- `[ Project Name     -black-             {gear} ][ {list} {+} ]`
-  `{list}` show a list of all projects that user owns
-- if user has no projects, {list} doesn't show up
-- project list page has names of all projects to go to their page
-- pressing enter with modal will attempt to save it
 - make text size two buttons: once that increments by 10% and one that decreases by 10%
 
 
-## MILESTONE 9
+## MILESTONE 6
 ### Symbols, Tags, and Advanced Patterns
 - can create symbols at the project level that have an image and a name
 - can rename symbols
@@ -116,7 +106,7 @@
 - `{art}` puts the image in the field with pos:abs, w/h:100%
 
 
-## MILESTONE 5
+## MILESTONE 8
 ### Code Health
 - ✓ add secret_key env to heroku account
 - ✓ add secret_key env to pycharm environment
@@ -137,15 +127,14 @@
 - cleanup: move Font model to its own app
 
 
-## MILESTONE 8
+## MILESTONE 9
 ### Users
 - if not logged in, show log-in screen to log-in
 - upon login, go to project list
 - add button to bar at top for user page
-- `[ Project Name            {gear} ][ {list} {+} {user} ]`
+- `[ Project Name            {gear} ][ {user} ]`
   where `{user}` will go to user settings
 - user settings has a name field for the user
-
 
 
 ## MILESTONE 10
@@ -159,3 +148,17 @@
 - with the data and rules, we can compute a graph
 - to show all the cards in the project
 - we can go from one cardtype to the graph show the jedi curve
+
+
+## Low-Priority
+- load in pages after load; not resending head, nav
+- project settings page has editable name
+- project settings page has delete option
+- `[ Project Name     -black-             {gear} ][ {+} ]` <- dk. green
+  {+} is the button to create a new project
+- new project page has text-box for project name and save!
+- `[ Project Name     -black-             {gear} ][ {list} {+} ]`
+  `{list}` show a list of all projects that user owns
+- if user has no projects, {list} doesn't show up
+- project list page has names of all projects to go to their page
+- pressing enter with modal will attempt to save it

@@ -3,33 +3,31 @@
 {% block content %}
 <div class="col-md-12">
     <h3>Showing {{ cards|length }} card instances, totalling {{ total_card_count }} cards</h3>
-    <div class="card-list cardtype-{{ card_type.name }}">
-        <table class="table">
-            <thead>
-                <tr>
-                    <td colspan="2">
-                        <button class="btn btn-success" id="add-card" data-card-type="{{ card_type.pk }}">+ Add card</button>
-                    </td>
-                    <td colspan="{{ card_type.cardtypedata_set.all|length }}"></td>
-                    <td colspan="{{ card_type.field_set.all|length }}"></td>
-                <tr>
-                    <td>Title</td>
-                    <td>Count</td>
-                    {% for datatype in card_type.cardtypedata_set.all %}
-                        <td class="data-header">{{ datatype.name }}</td>
-                    {% endfor %}
-                    {% for field in card_type.editable_fields %}
-                        <td class="field-header">{{ field.name }}</td>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-            {% for card in cards %}
-                {% include 'partials/card-row.html' %}
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-success" id="add-card" data-card-type="{{ card_type.pk }}">+ Add card</button>
+                </td>
+                <td colspan="{{ card_type.cardtypedata_set.all|length }}"></td>
+                <td colspan="{{ card_type.field_set.all|length }}"></td>
+            <tr>
+                <td>Title</td>
+                <td>Count</td>
+                {% for datatype in card_type.cardtypedata_set.all %}
+                    <td class="data-header">{{ datatype.name }}</td>
+                {% endfor %}
+                {% for field in card_type.editable_fields %}
+                    <td class="field-header">{{ field.name }}</td>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for card in cards %}
+            {% include 'partials/card-row.html' %}
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% include 'partials/modal-edit-card.html' %}
 {% include 'partials/modal-new-card.html' %}

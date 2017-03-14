@@ -14,16 +14,33 @@ class Project(models.Model):
     create_date = models.DateTimeField('date created', auto_now_add=True, blank=True)
     owner = models.ForeignKey(User, null=True, blank=True, related_name='projects', on_delete=models.CASCADE)
 
+    # TODO: Move this function to some core library
     @staticmethod
     def to_slug(string):
+        """
+        Creates a slug from any string
+        :param string: input
+        :return: {string} of slug
+        """
         return string.replace(' ', '-').lower()
 
     @property
     def slug(self):
+        """
+        :return: slug of the project
+        """
         return Project.to_slug(self.name)
 
     @staticmethod
     def get_by_slug(project_slug):
+        """
+        Gets the project by the slug
+        :param project_slug: slug for the project
+        :return: Project of slug
+        :raises: ValueError if no project found
+        """
+
+        # TODO: Optimise this function
         projects = [p for p in Project.objects.all() if p.slug == project_slug]
 
         if len(projects) != 1:
@@ -39,6 +56,12 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Symbol(models.Model):
+    """
+
+    """
 
 
 class CardType(models.Model):
@@ -57,6 +80,10 @@ class CardType(models.Model):
 
     @property
     def editable_fields(self):
+        """
+        Gives the list of fields without a value for a default template
+        :return: list of fields
+        """
         fields = []
         for field in self.field_set.all():
             if len(field.template) == 0:
@@ -65,15 +92,31 @@ class CardType(models.Model):
         return fields
 
     def default_dataset(self):
+        """
+        Gives a list of tuples of datanames, and default values
+        :return: array of tuples in the form (name, value)
+        """
         return [(data.name, 0) for data in self.cardtypedata_set.all()]
 
     def margin(self):
+        """
+        Gives the margin for cards
+        """
+        # TODO: Could remove this function, probably
         return CardType.REASONABLE_MARGIN
 
     def inner_width(self):
+        """
+        Gets the inner-width of the card (width, minus margin) in inches
+        :return: real number in inches
+        """
         return float(self.width) - (CardType.REASONABLE_MARGIN * 2.2)
 
     def inner_height(self):
+        """
+        Gets the inner-height of the card (height, minus margin) in inches
+        :return: real number in inches
+        """
         return float(self.height) - (CardType.REASONABLE_MARGIN * 2.2)
 
     def __str__(self):
@@ -102,6 +145,11 @@ class Font(models.Model):
     ))
 
     def css(self):
+        """
+        Returns the CSS for the `font-family` property
+        :return: CSS string
+        """
+        # TODO: is this... viewey?
         return '\'{}\', {}'.format(
             self.name,
             self.type
@@ -131,21 +179,26 @@ class Field(models.Model):
     card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
 
     def css(self):
-
+        """
+        Gets the CSS for this field, if no selected font, then uses Arial
+        :return: CSS string
+        """
+        # TODO: is this also too viewey?
         if not self.font:
             font = Font.objects.get(name='Arial')
         else:
             font = self.font
 
-        return 'width:{}%; top:{}%; text-align:{}; font-weight:{}; font-style:{}; font-family:{}; font-size:{}%;'.format(
-            self.width * 100,
-            self.height * 100,
-            self.alignment,
-            'bold' if self.is_bold else 'normal',
-            'italic' if self.is_italic else 'normal',
-            font.css(),
-            self.font_size,
-        )
+        return 'width:{}%; top:{}%; text-align:{}; font-weight:{}; ' \
+               'font-style:{}; font-family:{}; font-size:{}%;'.format(
+                    self.width * 100,
+                    self.height * 100,
+                    self.alignment,
+                    'bold' if self.is_bold else 'normal',
+                    'italic' if self.is_italic else 'normal',
+                    font.css(),
+                    self.font_size,
+                )
 
     def __str__(self):
         return self.name
@@ -165,11 +218,23 @@ class Card(models.Model):
         return self.title
 
     def set_data(self, name, value):
+        """
+        Sets the data for a specific data name
+        :param name: name of card-data
+        :param value: to set for card-data
+        :return: nothing
+        """
         values = json.loads(self.data)
         values[name] = value
         self.data = json.dumps(values)
 
     def data_value(self, name):
+        """
+        Gets the data-value for a given card-data name, side-effect: if there is no value for that
+        data in the card yet, it will default to 0 and save that in the card
+        :param name: of the data
+        :return: number, default 0
+        """
         values = json.loads(self.data)
 
         try:
@@ -182,9 +247,20 @@ class Card(models.Model):
         return values[name]
 
     def dataset(self):
+        """
+        Gets the full data set of the card in the form of [( name, value),(name, value)...]
+        :return: array of tuples in the form (name, value)
+        """
         return [(data.name, self.data_value(data.name)) for data in self.card_type.cardtypedata_set.all()]
 
     def set_field(self, name, value):
+        """
+        Sets the value of a field. Side effect: if no field data exists for that field, then
+        it will create a new field data entry
+        :param name: of field
+        :param value: string of new field value
+        :return: nothing
+        """
         field = Field.objects.get(name=name)
         try:
             field_data = self.fielddata_set.get(field=field)
@@ -201,6 +277,12 @@ class Card(models.Model):
 
     @property
     def patterns(self):
+        """
+        Gets the list of patterns for this card
+        :return: array of tuples in the form (pattern, replacement)
+        """
+        # TODO: this might need to get more complicated
+        # like using regex for the pattern and a lambda function for the replacement
         pattern_list = [
             ('{title}', self.title),
             ('{count}', str(self.count)),
@@ -215,13 +297,17 @@ class Card(models.Model):
 
     @property
     def fields(self):
+        """
+        Gets a list of fields, with value set to what should be displayed
+        :return: an array of fields, with value
+        """
         fields = []
 
         for field in self.card_type.field_set.all():
             try:
                 data = self.fielddata_set.get(field=field)
                 field.value = data.value
-            except:
+            except ObjectDoesNotExist:
                 field.value = field.template
                 field.inherited = True
 
@@ -234,12 +320,16 @@ class Card(models.Model):
 
     @property
     def editable_fields(self):
+        """
+        Like the fields property, but only gets fields without a default template
+        :return: array of fields, with value (default: None)
+        """
         fields = []
         for field in self.card_type.editable_fields:
             try:
                 data = self.fielddata_set.get(field=field)
                 field.value = data.value
-            except:
+            except ObjectDoesNotExist:
                 field.value = None
             fields.append(field)
 
@@ -254,6 +344,7 @@ class FieldData(models.Model):
     field = models.ForeignKey(Field, related_name='+', on_delete=models.CASCADE)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
 
+    @property
     def name(self):
         return self.field.name
 

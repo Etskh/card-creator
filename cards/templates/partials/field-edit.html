@@ -30,7 +30,11 @@
     </div>
     <div class="row">
         <div class="input-group">
-            <div class="input-group-btn">
+            <span class="input-group-addon" id="font-select-label">
+                    A
+                </span>
+            <div class="input-group-btn" aria-describedby="font-select-label" >
+
                 <button class="btn btn-default dropdown-toggle" id="font-select" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family:'{% if field.font %}{{field.font.name}}{% else %}Arial{% endif %}';">
                     {% if field.font %}{{field.font.name}}{% else %}Arial{% endif %}
                 </button>

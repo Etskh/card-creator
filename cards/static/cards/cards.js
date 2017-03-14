@@ -13,6 +13,11 @@ var createInputTimer = function( options ) {
 
             var value = $(target).val();
             if( options.regex ) {
+
+                if (options.regex == 'email') {
+                    options.regex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+                }
+
                 var $alert = options.$errorElem;
                 if( !value.match(options.regex) ) {
                     $alert.find('.text').text(options.errorMessage);
@@ -50,6 +55,9 @@ var createInputTimer = function( options ) {
 
 var CardData = {
     init: function() {
+        $('#add-data').click(function(){
+            CardData.create();
+        });
         createInputTimer({
             $elem: $('.datatype-name'),
             regex: /^[a-zA-Z\-]+$/,
@@ -86,6 +94,41 @@ var CardData = {
 
 
 var CardType = {
+    init: function() {
+        $('#add-card-type').click(function(){
+            $('#card-type-new-modal').modal('show');
+            $('#new-card-type-name').focus();
+        });
+        createInputTimer({
+            $elem: $('#new-card-type-name'),
+            regex: /^[a-zA-Z\-]+$/,
+            $errorElem: $('#new-cardtype-alert'),
+            errorMessage: 'Name can only contain letters, and dashes',
+            success: function( value ) {
+                $('button#card-type-new').attr('disabled', false);
+            },
+        });
+        $('button#card-type-new').click(function(){
+            $('#card-type-new-modal').modal('hide');
+        });
+        createInputTimer({
+            $elem: $('.cardtype-name'),
+            regex: /^[a-zA-Z\-]+$/,
+            $errorElem: $('#cardtype-alert'),
+            errorMessage: 'Name can only contain letters, and dashes',
+            success: function( value ) {
+                var id = $('.cardtype-name').data('id');
+                CardType.save(id, {
+                    name: value,
+                }, function() {
+                    // empty
+                });
+            },
+        });
+    },
+    create: function(project_id) {
+        // empty
+    },
     save: function(id, data, callback) {
         $.post('/cardtype/' + id, data, function(response){
             if( callback ) {
@@ -96,6 +139,13 @@ var CardType = {
 };
 
 var Field = {
+    init: function() {
+        $('.selectable-field').click(Field.click);
+
+        $('#add-field').click(function(){
+            Field.create();
+        });
+    },
     save: function(id, data, callback) {
         $.post('/field/' + id, data, function(response){
             if( callback ) {
@@ -344,39 +394,11 @@ var Card = {
 
 $(document).ready( function() {
 
-    //
-    // Card type editing
-    //
-    $('.selectable-field').click(Field.click);
+    CardType.init();
 
-    $('#add-field').click(function(){
-        Field.create();
-    });
+    Field.init();
 
-    $('#add-data').click(function(){
-        CardData.create();
-    });
     CardData.init();
-
-    createInputTimer({
-        $elem: $('.cardtype-name'),
-        regex: /^[a-zA-Z\-]+$/,
-        $errorElem: $('#cardtype-alert'),
-        errorMessage: 'Name can only contain letters, and dashes',
-        success: function( value ) {
-            $('#cardtype-name-label').addClass('label-success');
-            setTimeout(function() {
-                $('#cardtype-name-label').removeClass('label-success');
-            }, 1000);
-            var id = $('.cardtype-name').data('id');
-            CardType.save(id, {
-                name: value,
-            }, function() {
-                // empty
-            });
-        },
-    });
-
 
     // Card data editing
     //

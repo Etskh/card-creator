@@ -58,10 +58,7 @@ class Project(models.Model):
         return self.name
 
 
-class Symbol(models.Model):
-    """
 
-    """
 
 
 class CardType(models.Model):

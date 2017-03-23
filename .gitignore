@@ -93,3 +93,7 @@ ENV/
 
 # Static files
 public/
+*.min.*
+
+# Node
+node_modules

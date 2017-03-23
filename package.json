@@ -1,0 +1,27 @@
+{
+  "name": "card-creator",
+  "version": "0.0.1",
+  "description": "Create board game and collectible card games with a WYSIWYG editor",
+  "scripts": {
+    "start": "python manage.py runserver",
+    "test": "python manage.py test",
+    "postinstall": "./node_modules/.bin/gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Etskh/card-creator.git"
+  },
+  "author": "Etskh",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-less": "^3.3.0",
+    "gulp-sourcemaps": "^2.4.1",
+    "gulp-uglify": "^2.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Etskh/card-creator/issues"
+  },
+  "homepage": "https://github.com/Etskh/card-creator#readme"
+}

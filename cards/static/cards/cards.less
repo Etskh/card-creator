@@ -5,31 +5,8 @@ BODY {
     color: #EEE;
     font-weight: 300;
     font-family: 'Open Sans Condensed', sans-serif;
-
 }
 
-
-
-/*
-TABLE {
-    color: #FFF;
-    background-color: transparent;
-}
-TD {
-    color: #FFF;
-}
-TD INPUT {
-    color: #000;
-    text-align: center;
-    width: 64px;
-}
-THEAD TD {
-    font-weight: bold;
-}
-TBODY TR {
-    background-color: rgba(255,255,255,0.1);
-}
-*/
 TBODY TR:hover {
     background: rgba(200,200,200,0.3);
     cursor: pointer;
@@ -49,28 +26,36 @@ LI {
 nav.navbar-default {
     color:#FFF;
     margin:0px;
-}
-nav.navbar-default a {
-    color:#FFF !important;
-}
-nav.navbar-default a:hover {
-    color:#FFF !important;
+
+    a {
+        color:#FFF !important;
+
+        &:hover {
+            color:#FFF !important;
+        }
+    }
 }
 
 nav.cardtypes-nav {
     border: none;
+
+    .navbar-nav>.active>a,
+    .navbar-nav>.active>a:hover,
+    .navbar-nav>.active>a:focus {
+        background: #333;
+        text-shadow: #000 0px 0px 4px;
+        color: #FFF;
+    }
 }
-nav.cardtypes-nav .navbar-nav>.active>a,
-nav.cardtypes-nav .navbar-nav>.active>a:hover,
-nav.cardtypes-nav .navbar-nav>.active>a:focus {
-    background: #333;
-    text-shadow: #000 0px 0px 4px;
-    color: #FFF;
-}
+
+
+
+
+
+
 nav.card-nav {
     background: rgb(98, 181, 77);
     min-height: 30px;
-    /*background: rgb(138, 216, 142);*/
     border: none;
 }
 nav.card-nav .navbar-nav > li:hover {
@@ -94,22 +79,27 @@ nav.project-nav .navbar-brand {
 }
 
 
+
+
+
+
+
 .controls {
     display: inline-block;
     padding: 0.5in;
     vertical-align: top;
     background: rgba(255,255,255,0.2);
     width: 340px;
-}
-.controls p {
-    color: #EEE;
-    text-shadow: #000 0px 0px 3px;
-}
-.controls .row {
-    margin: 4px;
-}
 
+    p {
+        color: #EEE;
+        text-shadow: #000 0px 0px 3px;
+    }
 
+    .row {
+        margin: 4px;
+    }
+}
 
 
 .card-list, .card-edit-list {
@@ -122,6 +112,7 @@ nav.project-nav .navbar-brand {
     margin-right: 64px;
     margin-bottom: 48px;
 }
+
 .card {
     position:relative;
     border-radius:0.08in;
@@ -130,12 +121,14 @@ nav.project-nav .navbar-brand {
     color: #222;
     text-shadow:#FFF 0px 0px 4px;
     box-shadow: #000 0px 0px 20px;
+
+    .field {
+        position:absolute;
+        cursor: pointer;
+        border: solid 4px transparent;
+    }
 }
-.card .field {
-    position:absolute;
-    cursor: pointer;
-    border: solid 4px transparent;
-}
+
 .card-count {
     text-shadow:#333 0px 0px 4px;
     color:#FFF;

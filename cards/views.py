@@ -1,68 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse, Http404
 from django.views import View
 
 from .models import Project, CardType, Field, CardTypeData, Font, Card
 from .apps import CardsConfig
 
-def home(request):
-    card_types = CardType.objects.all()
-    # Grab whatever card type and take the project from that
-    # FIXME: security matters, kids. Just not yet
-    project = card_types[0].project
-    return render(request, 'core/default.html', {
-        'project': project,
-        'view_name': 'home',
-        'card_types': card_types,
-    })
-
-
-def project_home(request, project_slug):
-
-    project = Project.get_by_slug(project_slug)
-
-    return render(request, 'project-settings.html', {
-        'project': project,
-        'view_name': 'home',
-        'card_types': project.cardtype_set.all(),
-    })
-
-
-def project_settings(request, project_slug):
-
-    project = Project.get_by_slug(project_slug)
-
-    return render(request, 'project-settings.html', {
-        'project': project,
-        'card_types': project.cardtype_set.all(),
-    })
-
-
-# TODO: Move this to its own module
 
 class TemplateView:
-
-    @staticmethod
-    def project(request, project_slug):
-        view = TemplateView(request, 'project')
-        view.add_project(project_slug)
-        return view.render()
-
-    @staticmethod
-    def card_type(request, project_slug, card_type_slug, view_name):
-        view = TemplateView(request, view_name)
-        view.add_project(project_slug)
-        view.add_card_type(card_type_slug)
-        # TODO: Sanity check that card_type's owner is project
-        return view.render()
-
-    @staticmethod
-    def ajax_card_popup(request, card_id, view_name):
-        view = TemplateView(request, view_name)
-        card = get_object_or_404(Card, pk=card_id)
-        view.context['card'] = card
-        view.context['dataset'] = card.dataset()
-        return view.render()
 
     def __init__(self, request, view_name):
         templates = {
@@ -72,6 +16,9 @@ class TemplateView:
             'data': 'card-data.html',
             # These are called via AJAX only
             'ajax-card-popup': 'partials/card-entry.html',
+            'ajax-card-row': 'partials/card-row.html',
+            'ajax-field-span': 'partials/field-span.html',
+            'ajax-field-edit': 'partials/field-edit.html',
         }
         # TODO: Make sure if the view-name is 'ajax-*' then request is AJAX
 
@@ -99,27 +46,43 @@ class TemplateView:
         return render(self.request, self.template, self.context)
 
 
-class TemplateCardTypeView:
-    @staticmethod
-    def render(request, project_slug, card_type_slug, view_name):
-        templates = {
-            'view': 'card-list.html',
-            'layout': 'card-layout.html',
-            'data': 'card-data.html',
-        }
-        project = Project.get_by_slug(project_slug)
+class RestView(View):
 
-        # TODO: sanity check for card_type belonging to project
-        card_type = CardType.objects.get(name=card_type_slug)
-        cards = card_type.card_set.all()
+    def post(self, request, pk):
+        obj = get_object_or_404(self.model, pk=pk)
 
-        return render(request, templates[view_name], {
-            'project': project,
-            'card_type': card_type,
-            'view_name': view_name,
-            'card_types': project.cardtype_set.all(),
-            'cards': card_type.card_set.all(),
-            'total_card_count': sum([card.count for card in cards]),
+        for field in self.fields:
+            if field in request.POST:
+                setattr(obj, field, request.POST[field])
+
+        if hasattr(self, 'before_save'):
+            self.before_save()
+
+        obj.save()
+
+        return JsonResponse({
+            'success': True,
+            'id': obj.id,
+        })
+
+    def put(self, request):
+
+        if not hasattr(self, 'create_object'):
+            raise Http404("Method doesn't exist.")
+
+        obj = self.create_object(request)
+        obj.save()
+
+        return JsonResponse({
+            'success': True,
+            'id': obj.id,
+        })
+
+    def delete(self, request, pk):
+        obj = get_object_or_404(self.model, pk=pk)
+        obj.delete()
+        return JsonResponse({
+            'success': True,
         })
 
 
@@ -127,40 +90,103 @@ class TemplateCardTypeView:
 
 
 
-class CardView(View):
 
-    @staticmethod
-    def create(request, type_id):
-        card_type = get_object_or_404(CardType, pk=type_id)
 
-        card = Card.objects.create(
-            card_type=card_type,
-            title=request.POST['title'],
-        )
 
-        return render(request, 'partials/card-row.html', {
-            'card_type': card_type,
-            'dataset': card_type.default_dataset(),
-            'card': card
-        })
 
-    def get(self, request, card_id=None):
-        if not card_id:
-            return render(request, 'partials/card-entry.html', {
-                # empty
-            })
 
-        card = get_object_or_404(Card, pk=card_id)
-        return render(request, 'partials/card-entry.html', {
-            'card': card,
-            'dataset': card.dataset(),
-        })
+def home(request):
+    return redirect('/trekcthulu')
 
-    def post(self, request, card_id):
-        card = get_object_or_404(Card, pk=card_id)
-        card.title = request.POST['title']
-        card.count = request.POST['count']
 
+def project(request, project_slug):
+    view = TemplateView(request, 'project')
+    view.add_project(project_slug)
+    return view.render()
+
+
+def card_type(request, project_slug, card_type_slug, view_name):
+    view = TemplateView(request, view_name)
+    view.add_project(project_slug)
+    view.add_card_type(card_type_slug)
+    # TODO: Sanity check that card_type's owner is project
+    return view.render()
+
+
+
+
+
+
+def ajax_card_popup(request, project_slug, card_type_slug, card_id):
+    card = get_object_or_404(Card, pk=card_id)
+
+    view = TemplateView(request, 'ajax-card-popup')
+    view.add_project(project_slug)
+    view.add_card_type(card_type_slug)
+    view.context['card'] = card
+    view.context['dataset'] = card.dataset()
+
+    return view.render()
+
+
+def ajax_new_card_popup(request, project_slug, card_type_slug):
+
+    view = TemplateView(request, 'ajax-card-popup')
+    view.add_project(project_slug)
+    view.add_card_type(card_type_slug)
+
+    return view.render()
+
+
+def ajax_card_row(request, project_slug, card_type_slug, card_id):
+    card = get_object_or_404(Card, pk=card_id)
+
+    view = TemplateView(request, 'ajax-card-row')
+    view.add_project(project_slug)
+    view.add_card_type(card_type_slug)
+    view.context['card'] = card
+    view.context['dataset'] = view.context['card_type'].default_dataset()
+
+    return view.render()
+
+
+def ajax_field_edit(request, project_slug, card_type_slug, field_id):
+    field = get_object_or_404(Field, pk=field_id)
+
+    view = TemplateView(request, 'ajax-field-edit')
+    view.context['field'] = field
+    view.context['fonts'] = Font.objects.all()
+
+    return view.render()
+
+
+def ajax_field_span(request, project_slug, card_type_slug, field_id):
+    field = get_object_or_404(Field, pk=field_id)
+
+    view = TemplateView(request, 'ajax-field-span')
+    view.context['field'] = field
+
+    return view.render()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class CardRestView(RestView):
+    model = Card
+    fields = ['title', 'count']
+
+    def before_save(self, request, card):
         for name, value in card.dataset():
             card.set_data(name, request.POST['data[' + name + ']'])
 
@@ -170,104 +196,55 @@ class CardView(View):
             except KeyError:
                 pass
 
-        card.save()
-
-        return JsonResponse({
-            'success': True
-        })
-
-
-class CardTypeView(View):
-
-    def post(self, request, card_type_id):
-        card_type = get_object_or_404(CardType, pk=card_type_id)
-        card_type.name = request.POST['name']
-
-        card_type.save()
-
-        return JsonResponse({
-            'success': True
-        })
-
-
-class CardDataView(View):
-
-    def put(self, request):
-        card_type = get_object_or_404(CardType, name='Items')
-        card_data = CardTypeData.objects.create(
-            name='new-data-type',
+    def create_object(self, request):
+        card_type = get_object_or_404(CardType, pk=request.POST['card_type_id'])
+        return Card.objects.create(
             card_type=card_type,
+            title=request.POST['title'],
         )
-        return render(request, 'partials/data-edit.html', {
-            'data': card_data
-        })
-
-    def post(self, request, card_data_id):
-        card_data = get_object_or_404(CardTypeData, pk=card_data_id)
-        card_data.name = request.POST['name']
-
-        card_data.save()
-
-        return JsonResponse({
-            'success': True
-        })
 
 
-class FieldView(View):
+class CardTypeRestView(RestView):
+    model = CardType
+    fields = ['name']
 
-    def get(self, request, field_id):
-        field = get_object_or_404(Field, pk=field_id)
-        return render(request, 'partials/field-edit.html', {
-            'field': field,
-            'fonts': Font.objects.all(),
-        })
 
-    def post(self, request, field_id):
-        field = get_object_or_404(Field, pk=field_id)
-        if 'top' in request.POST:
-            field.height = request.POST['top']
+class FieldRestView(RestView):
+    model = Field
+    fields = [
+        'name',
+        'top',
+        'template',
+        'alignment',
+        'font_size',
+    ]
 
-        if 'name' in request.POST:
-            field.name = request.POST['name']
-
+    def before_save(self, request, obj):
         if 'is_bold' in request.POST:
-            field.is_bold = request.POST['is_bold'] == 'true'
-
+            obj.is_bold = request.POST['is_bold'] == 'true'
         if 'is_italic' in request.POST:
-            field.is_italic = request.POST['is_italic'] == 'true'
-
-        if 'template' in request.POST:
-            field.template = request.POST['template']
-
-        if 'alignment' in request.POST:
-            field.alignment = request.POST['alignment']
-
+            obj.is_italic = request.POST['is_italic'] == 'true'
         if 'font_id' in request.POST:
             font = get_object_or_404(Font, pk=request.POST['font_id'])
-            field.font = font
+            obj.font = font
 
-        if 'font_size' in request.POST:
-            field.font_size = request.POST['font_size']
-
-        field.save()
-
-        return JsonResponse({
-            'success': True
-        })
-
-    def delete(self, request, field_id):
-        field = get_object_or_404(Field, pk=field_id)
-        field.delete()
-        return JsonResponse({
-            'success': True
-        })
-
-    def put(self, request):
+    def create_object(self, request):
+        # TODO: Make this work
         card_type = get_object_or_404(CardType, name='Items')
-        field = Field.objects.create(
+        return Field.objects.create(
             name='new-field',
             card_type=card_type,
         )
-        return render(request, 'partials/field-span.html', {
-            'field': field
-        })
+
+
+class CardDataRestView(RestView):
+    model = CardTypeData
+    fields = ['name']
+
+    def create_object(self):
+        card_type = get_object_or_404(CardType, name='Items')
+        return CardTypeData.objects.create(
+            name='new-data-type',
+            card_type=card_type,
+        )
+

@@ -1,16 +1,13 @@
 from django.apps import AppConfig
+import json
+
+with open('package.json') as data_file:
+    version = json.load(data_file)['version']
 
 
 class CardsConfig(AppConfig):
     name = 'cards'
+    package_path = 'package.json'
 
-    version_major = 0
-    version_minor = 0
-    version_release = 1
-
-    version_full = '.'.join([
-        str(version_major),
-        str(version_minor),
-        str(version_release),
-    ])
+    version_full = version
 

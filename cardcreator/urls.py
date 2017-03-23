@@ -16,7 +16,29 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from cards import views as cardviews
-from cards.views import FieldView, CardTypeView, CardDataView, CardView
+from cards.views import FieldRestView, CardTypeRestView, CardDataRestView, CardRestView
+
+
+"""
+
+  Templates
+
+    /:project                           -> Template.project
+    /:project/settings                  -> ||
+    /:project/:card_type                -> Template.card_type
+    /:project/:card_type/layout         -> ||
+    /:project/:card_type/edit           -> ||
+    /:project/:card_type/new           -> Template.new_card
+    /:project/:card_type/:card_id/edit -> Template.card_edit
+
+  REST
+
+    /card/:id
+    /card/:id
+    /card/:id
+
+"""
+
 
 urlpatterns = [
     # Admin pages
@@ -25,31 +47,45 @@ urlpatterns = [
     # Main views
     url(r'^$', cardviews.home),
 
-    # project home
-    url(r'^(?P<project_slug>[a-zA-Z\-]+)$', cardviews.TemplateView.project),
-    url(r'^(?P<project_slug>[a-zA-Z\-]+)/settings$', cardviews.TemplateView.project),
-
+    # TODO: refactor everything with project_slug to its own url file
+    #
+    # Project
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)$',
+        cardviews.project),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/settings$',
+        cardviews.project),
+    #
     # Card Type
     url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)$',
-        cardviews.TemplateView.card_type, {'view_name': 'view'}),
+        cardviews.card_type, {'view_name': 'view'}),
     url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/layout$',
-        cardviews.TemplateView.card_type, {'view_name': 'layout'}),
+        cardviews.card_type, {'view_name': 'layout'}),
     url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/data$',
-        cardviews.TemplateView.card_type, {'view_name': 'data'}),
+        cardviews.card_type, {'view_name': 'data'}),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/layout$',
+        cardviews.card_type, {'view_name': 'layout'}),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/data$',
+        cardviews.card_type, {'view_name': 'data'}),
+
+    #
+    # Cards
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/new-card$', cardviews.ajax_new_card_popup),
+    url(r'^(?P<project_slug>[a-zA-Z\-]+)/(?P<card_type_slug>[a-zA-Z\-]+)/(?P<card_id>[0-9]+)/edit$',
+        cardviews.ajax_card_popup),
+
 
     # RESTful interface
     # TODO: move this away
-    url(r'^type/(?P<type_id>[0-9]+)/new-card$', CardView.create),
     # Card
-    url(r'^card$', CardView.as_view()),
-    url(r'^card/(?P<card_id>[0-9]+)$', CardView.as_view()),
+    url(r'^api/card$', CardRestView.as_view()),
+    url(r'^api/card/(?P<pk>[0-9]+)$', CardRestView.as_view()),
     # Fields
-    url(r'^field$', FieldView.as_view()),
-    url(r'^field/(?P<field_id>[0-9]+)$', FieldView.as_view()),
+    url(r'^api/field$', FieldRestView.as_view()),
+    url(r'^api/field/(?P<pk>[0-9]+)$', FieldRestView.as_view()),
     #  Card Type
-    url(r'^cardtype/(?P<card_type_id>[0-9]+)$', CardTypeView.as_view()),
-    url(r'^cardtype/(?P<card_type_id>[0-9]+)/create$', CardTypeView.as_view()),
+    url(r'^api/cardtype$', CardTypeRestView.as_view()),
+    url(r'^api/cardtype/(?P<pk>[0-9]+)$', CardTypeRestView.as_view()),
     # Data
-    url(r'^data$', CardDataView.as_view()),
-    url(r'^data/(?P<card_data_id>[0-9]+)$', CardDataView.as_view()),
+    url(r'^api/data$', CardDataRestView.as_view()),
+    url(r'^api/data/(?P<pk>[0-9]+)$', CardDataRestView.as_view()),
 ]

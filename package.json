@@ -13,7 +13,7 @@
   },
   "author": "Etskh",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-less": "^3.3.0",
